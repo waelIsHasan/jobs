@@ -16,7 +16,7 @@ class BaseAuthService {
             ];
         }
         //send otp 
-         Mail::to($request->email)->send(new VerifiedEmailMail($request->email));
+       //  Mail::to($request->email)->send(new VerifiedEmailMail($request->email));
         //create new user
         $input = $request->all();
         $input['password'] = Hash::make($request['password']);

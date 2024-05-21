@@ -50,4 +50,9 @@ class Owner extends Authenticatable
     public function profile() {
         return $this->morphOne(Profile::class , 'profileable');
     }
+
+  
+  public function jobs(){
+    return $this->hasMany(Job::class);
+  }
 }
