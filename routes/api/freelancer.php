@@ -7,6 +7,7 @@ use App\Http\Controllers\Freelancer\Auth\ResetPasswordFreelancerController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Profile;
+use App\Http\Controllers\Freelancer\ApplicationJobController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,5 +40,7 @@ Route::group(['prefix' => 'freelancer', 'middleware' => ['auth:freelancer-api' ,
     Route::get('/profile' , [ProfileController::class, 'getProfile']);
     Route::post('/upload' , [ProfileController::class, 'uploadImage']);
     Route::get('/show-image' , [ProfileController::class, 'showImage']);
+
+   
 
 });
