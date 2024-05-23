@@ -4,7 +4,7 @@ use App\Http\Controllers\Seeker\Auth\AuthSeekerController;
 
 use App\Http\Controllers\Seeker\Auth\ResetPasswordSeekerController;
 use App\Http\Controllers\ProfileController;
-
+use App\Http\Controllers\FriendshipController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +38,8 @@ Route::post('/register' ,[AuthSeekerController::class , 'register']);
     Route::get('/profile' , [ProfileController::class, 'getProfile']);
     Route::post('/upload' , [ProfileController::class, 'uploadImage']);
     Route::get('/show-image' , [ProfileController::class, 'showImage']);
-
+    Route::post('/add-friend/{id2}/role/{model2}' , [FriendshipController::class, 'addFriend']);
+    Route::delete('/remove-friend/{id2}/role/{model2}' , [FriendshipController::class, 'removeFriend']);
+    Route::get('/get-friends' , [FriendshipController::class, 'show']);
 
 });

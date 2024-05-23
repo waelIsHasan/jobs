@@ -18,7 +18,7 @@ class Job extends Model
         'owner_id'
     ];
 
-    public function owner(): BelongsTo
+    public function owner()
     {
         return $this->belongsTo(Owner::class);
     }

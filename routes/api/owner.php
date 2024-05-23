@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Owner\Auth\ResetPasswordOwnerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Owner\PostJobController;
+use App\Http\Controllers\FriendshipController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,14 +33,20 @@ Route::group(['prefix' =>'owner' ], function(){
 Route::group(['prefix' => 'owner', 'middleware' => ['auth:owner-api' , 'scopes:owner']] , function(){
     //logout 
     Route::post('/logout' ,[AuthOwnerController::class , 'logout'] );
+    //profile
     Route::post('/edit-profile' , [ProfileController::class, 'editProfile']);
     Route::get('/profile' , [ProfileController::class, 'getProfile']);
     Route::post('/upload' , [ProfileController::class, 'uploadImage']);
     Route::get('/show-image' , [ProfileController::class, 'showImage']);
-
+    
+    //jobs
     Route::post('/post-job' , [PostJobController::class, 'postJob']);
     Route::put('/update-job/{jobId}' , [PostJobController::class, 'updateJob']);
     Route::delete('/delete-job/{jobId}' , [PostJobController::class, 'deleteJob']);
     Route::get('/jobs' , [PostJobController::class, 'getJobs']);
-
+   
+    //firendship
+    Route::post('/add-friend/{id2}/role/{model2}' , [FriendshipController::class, 'addFriend']);
+    Route::delete('/remove-friend/{id2}/role/{model2}' , [FriendshipController::class, 'removeFriend']);
+    Route::get('/get-friends' , [FriendshipController::class, 'show']);
 });

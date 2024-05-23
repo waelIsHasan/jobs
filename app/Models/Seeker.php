@@ -52,4 +52,9 @@ class Seeker extends Authenticatable
     public function profile() {
         return $this->morphOne(Profile::class , 'profileable');
     }
+
+    public function friends(){
+        return $this->morphMany(Friendship::class, 'friend_one_able')
+           ->unionAll($this->morphMany(Friendship::class, 'friend_two_able'));
+    }
 }
