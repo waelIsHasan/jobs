@@ -23,5 +23,9 @@ class Job extends Model
         return $this->belongsTo(Owner::class);
     }
 
+    public function applications(){
+        return $this->hasMany(Application::class);
+    }
+
   
 }

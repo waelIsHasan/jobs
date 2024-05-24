@@ -43,4 +43,8 @@ class Freelancer extends Authenticatable
     public function profile() {
         return $this->morphOne(Profile::class , 'profileable');
     }
+
+    public function applications(){
+        return $this->hasMany(Application::class);
+    }
 }

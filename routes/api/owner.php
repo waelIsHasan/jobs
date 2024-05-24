@@ -41,5 +41,8 @@ Route::group(['prefix' => 'owner', 'middleware' => ['auth:owner-api' , 'scopes:o
     Route::put('/update-job/{jobId}' , [PostJobController::class, 'updateJob']);
     Route::delete('/delete-job/{jobId}' , [PostJobController::class, 'deleteJob']);
     Route::get('/jobs' , [PostJobController::class, 'getJobs']);
+    Route::get('/application/{jobId}' , [PostJobController::class, 'showApplication']);
+    Route::get('/approvd-application/{appId}' , [PostJobController::class, 'approveApplication']);
+    Route::get('/reject-application/{appId}' , [PostJobController::class, 'rejectApplication']);
 
 });

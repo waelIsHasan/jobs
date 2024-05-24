@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Traits\ResponseTrait;
 use App\Models\Owner;
 use App\Models\Job;
+use App\Models\Application;
 use App\Services\PostJobService;
 
 class PostJobController extends Controller
@@ -56,4 +57,49 @@ class PostJobController extends Controller
             return $owner->jobs;
         }
 
+        public function showApplication($jobId){
+            $id = auth()->id();
+           $job = Job::find($jobId);
+
+        if($job){
+            $applications = $job->applications;
+            return $this->successResponse('applications', $applications);
+        }else{
+            return $this->failedResponse('job not found', null);
+        }
+
+        }
+
+        public function approveApplication($appId){
+            $id = auth()->id();
+            $user = auth()->user();
+            $application = Application::find($appId);
+            $job = Job::find($application->job_id);
+
+            if($id == $job->owner_id){
+            $application->status = 'approved';
+            $application->save();
+            return $this->successResponse('application approved successfully',null);
+            }else{
+                return $this->failedResponse('you not have permssion', null);
+            }
+
+        }
+
+
+        public function rejectApplication($appId){
+            $id = auth()->id();
+            $user = auth()->user();
+            $application = Application::find($appId);
+            $job = Job::find($application->job_id);
+
+            if($id == $job->owner_id){
+            $application->status = 'rejected';
+            $application->save();
+            return $this->successResponse('application rejected successfully',null);
+            }else{
+                return $this->failedResponse('you not have permssion', null);
+            }
+    
+        }
 }

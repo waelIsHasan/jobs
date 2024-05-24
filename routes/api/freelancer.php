@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Profile;
 use App\Http\Controllers\Freelancer\ApplicationJobController;
+use App\Http\Controllers\ApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,8 @@ Route::group(['prefix' => 'freelancer', 'middleware' => ['auth:freelancer-api' ,
     Route::post('/upload' , [ProfileController::class, 'uploadImage']);
     Route::get('/show-image' , [ProfileController::class, 'showImage']);
 
-   
 
+    Route::post('/apply/{jobId}' , [ApplicationController::class, 'apply']);
+    Route::get('/applications' , [ApplicationController::class, 'showApplications']);
+    Route::get('/application/{appId}' , [ApplicationController::class, 'showApplication']);
 });
