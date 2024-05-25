@@ -55,4 +55,20 @@ class Owner extends Authenticatable
   public function jobs(){
     return $this->hasMany(Job::class);
   }
+
+//   public function friends1()
+//     {
+//         return $this->morphMany(Friendship::class, 'friend_one_able');
+//     }
+
+//     public function friends2()
+//     {
+//         return $this->morphMany(Friendship::class, 'friend_two_able');
+//     }
+
+    public function friends(){
+        return $this->morphMany(Friendship::class, 'friend_one_able')
+           ->unionAll($this->morphMany(Friendship::class, 'friend_two_able'));
+    }
+    
 }

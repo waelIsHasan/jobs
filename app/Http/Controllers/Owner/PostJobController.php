@@ -9,6 +9,9 @@ use App\Models\Owner;
 use App\Models\Job;
 use App\Models\Application;
 use App\Services\PostJobService;
+use Exception;
+
+use App\Http\Requests\PostJobRequest;
 
 class PostJobController extends Controller
 {
@@ -18,11 +21,9 @@ class PostJobController extends Controller
         $this->postJobService = $postJobService;
     }
 
-    public function postJob(Request $request)
+    public function postJob(PostJobRequest $request)
         {
             $id = auth()->id();
-            // $user = auth()->user();
-            // $user = Owner::where('id' ,$id)->first();
             $response = $this->postJobService->postJob($request  , $id);
             return $this->successResponse('post Job successfully' , $response['job'] );
           
@@ -44,11 +45,15 @@ class PostJobController extends Controller
         public function deleteJob($jobId){
             $id = auth()->id();
             $job = Job::find($jobId);
-            if($job->owner_id ==$id){
+        try{
+            if($job->owner_id == $id){
                 $job->delete();
-               return  response()->json('delete successfully', 200);
+               return $this->successResponse('delete job successfully' ,null );
             }
-            return  response()->json(' job not found', 200);
+        }
+        catch(Exception $e){
+            return $this->failedResponse('job not found !' ,null);
+        }
         }
 
         public function getJobs(){

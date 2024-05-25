@@ -2,6 +2,7 @@
 namespace App\Services;
 use App\Models\Job;
 use App\Models\Owner;
+use Exception;
 
 class PostJobService{
 
@@ -19,15 +20,15 @@ class PostJobService{
    
     }
 
-    public function updateJob($request , $id,$job){
-        
+    public function updateJob($request , $id, $job){
+     try{
         if($job->owner_id ==$id){
             $job->update([
-                'title' => $request['title'],
-                'body' => $request['body'],
-                'required_skills' => $request['required_skills'],
-                'location' => $request['location'],
-                'dead_time' => $request['dead_time'],
+                'title' => (($request['title'] == null && !($request->has('title'))) ? $job['title'] : $request['title']),
+                'body' => (($request['body'] == null && !($request->has('body'))) ? $job['body'] : $request['body']),
+                'required_skills' => (($request['required_skills'] == null && !($request->has('required_skills'))) ? $job['required_skills'] : $request['required_skills']),
+                'location' => (($request['location'] == null && !($request->has('location'))) ? $job['location'] : $request['location']),
+                'dead_time' =>(($request['dead_time'] == null && !($request->has('dead_time'))) ? $job['dead_time'] : $request['dead_time']),
                 'owner_id' =>$id,                  
                       ]);   
                       return [
@@ -36,6 +37,7 @@ class PostJobService{
                         'data' => $job
                         ];
                     } 
+
                     else {
         
                         return ['success' => false,
@@ -47,4 +49,13 @@ class PostJobService{
                     
                     
     }
+
+                      
+                catch(Exception $e){
+                return ['success' => false,
+                'msg' => 'do not have permssion' ,
+                'status' => 400];
+                }
+            }
+
 }

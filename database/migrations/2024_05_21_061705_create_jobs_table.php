@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('body');
-            $table->text('required_skills');
-            $table->string('location');
-            $table->date('dead_time');
+            $table->string('title')->nullable();
+            $table->text('body')->nullable();
+            $table->text('required_skills')->nullable();
+            $table->string('location')->nullable();
+            $table->date('dead_time')->nullable();
             $table->bigInteger('owner_id')->unsigned();
             $table->foreign('owner_id')->references('id')->on('owners')->onDelete('cascade');
             $table->timestamps();
