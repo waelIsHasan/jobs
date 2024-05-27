@@ -1,6 +1,5 @@
 <?php 
 namespace App\Services;
-use App\Models\Freelancer;
 use App\Models\Friendship;
 use Illuminate\Support\Str;
 
