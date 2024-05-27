@@ -23,7 +23,8 @@ class ApplicationController extends Controller
         }
 
         $request->validate([
-            'resume' => 'required|file'
+            'resume' => 'required|file',
+            'cover_later'=> 'nullable'
         ]);
 
         if ($request->hasFile('resume')){
@@ -34,6 +35,7 @@ class ApplicationController extends Controller
 
         $application = Application::create([
             'resume' => ("resume/".$path),
+            'cover_later' => $request->cover_later,
             'freelancer_id' =>$id,
             'job_id'=>$jobId,                 
         ]);

@@ -11,6 +11,7 @@ class Application extends Model
 
     protected $fillable = [
         'resume',
+        'cover_later',
         'status',
         'freelancer_id',
         'job_id',

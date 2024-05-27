@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
             $table->string("resume");
+            $table->text('cover_later')->nullable();
             $table->enum('status',['prending','approved','rejected']);
             $table->bigInteger('freelancer_id')->unsigned();
             $table->bigInteger('job_id')->unsigned();
