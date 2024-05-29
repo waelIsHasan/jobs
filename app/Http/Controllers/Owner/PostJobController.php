@@ -78,7 +78,12 @@ class PostJobController extends Controller
         public function approveApplication($appId){
             $id = auth()->id();
             $user = auth()->user();
+
             $application = Application::find($appId);
+            if($application == null){
+                return $this->failedResponse('I can not find the appliction' , null);
+            }
+
             $job = Job::find($application->job_id);
 
             if($id == $job->owner_id){
@@ -96,8 +101,13 @@ class PostJobController extends Controller
             $id = auth()->id();
             $user = auth()->user();
             $application = Application::find($appId);
-            $job = Job::find($application->job_id);
 
+            if($application == null){
+                return $this->failedResponse('I can not find the appliction' , null);
+            }
+
+
+            $job = Job::find($application->job_id);
             if($id == $job->owner_id){
             $application->status = 'rejected';
             $application->save();

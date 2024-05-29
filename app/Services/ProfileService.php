@@ -30,14 +30,12 @@ class ProfileService {
     }
 
     public function uploadImage($request , $user , $id , $model){
-        // if this user has image ,first I will delete it 
-       
-
+        // if this user has image ,first I will delete it        
         $nameFolder = strtolower(class_basename($model));
         $image = $request->file('file')->getClientOriginalName();
        // upload to server
         $path = $request->file('file')->storeAs($nameFolder,$image,'empco');
-      
+        
         //save it in database
         if($user->profile == null){
             $profile = Profile::create([
@@ -45,6 +43,7 @@ class ProfileService {
                 'profileable_id' =>$id,
                 'profileable_type' => class_basename($model),                    
             ]);
+        
             return ['profile' => $profile];
         }else {
 
@@ -61,7 +60,6 @@ class ProfileService {
                 ]);
                 return ['profile' => $profile];
         }
-    
     }
 
 }
