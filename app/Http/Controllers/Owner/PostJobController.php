@@ -45,6 +45,11 @@ class PostJobController extends Controller
         public function deleteJob($jobId){
             $id = auth()->id();
             $job = Job::find($jobId);
+            if($job == null){
+                return $this->failedResponse('job not found !' ,null);
+
+            }
+
         try{
             if($job->owner_id == $id){
                 $job->delete();
@@ -52,14 +57,14 @@ class PostJobController extends Controller
             }
         }
         catch(Exception $e){
-            return $this->failedResponse('job not found !' ,null);
+            return $this->failedResponse($e ,null);
         }
         }
 
-        public function getJobs(){
+        public function showJobs(){
             $id = auth()->id();
             $owner = Owner::find($id);
-            return $owner->jobs;
+            return  $this->successResponse('you have '.count($owner->jobs).' job posts' ,$owner->jobs);;
         }
 
         public function showApplication($jobId){

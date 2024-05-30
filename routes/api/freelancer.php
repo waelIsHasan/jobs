@@ -8,7 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FriendshipController;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Profile;
-use App\Http\Controllers\Freelancer\ApplicationJobController;
+use App\Http\Controllers\SaveController;
 use App\Http\Controllers\ApplicationController;
 
 /*
@@ -38,10 +38,13 @@ Route::group(['prefix' =>'freelancer' ], function(){
 Route::group(['prefix' => 'freelancer', 'middleware' => ['auth:freelancer-api' , 'scopes:freelancer']] , function(){
     //logout 
     Route::post('/logout' ,[AuthFreelancerController::class , 'logout'] );
+    
     Route::post('/edit-profile' , [ProfileController::class, 'editProfile']);
     Route::get('/profile' , [ProfileController::class, 'getProfile']);
     Route::post('/upload' , [ProfileController::class, 'uploadImage']);
     Route::get('/show-image' , [ProfileController::class, 'showImage']);
+    
+    
     Route::post('/add-friend/{id2}/role/{model2}' , [FriendshipController::class, 'addFriend']);
     Route::delete('/remove-friend/{id2}/role/{model2}' , [FriendshipController::class, 'removeFriend']);
     Route::get('/get-friends' , [FriendshipController::class, 'show']);
@@ -49,5 +52,11 @@ Route::group(['prefix' => 'freelancer', 'middleware' => ['auth:freelancer-api' ,
     Route::post('/apply/{jobId}' , [ApplicationController::class, 'apply']);
     Route::get('/applications' , [ApplicationController::class, 'showApplications']);
     Route::get('/application/{appId}' , [ApplicationController::class, 'showApplication']);
+
+    
+    Route::get('/save-post/{jobId}' , [SaveController::class, 'saveJobPost']);
+    Route::get('/unsave-post/{jobId}' , [SaveController::class, 'unsaveJobPost']);
+    Route::get('/saved-posts' , [SaveController::class, 'savedPosts']);
+
 
 });

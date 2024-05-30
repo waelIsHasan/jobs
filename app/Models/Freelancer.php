@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use App\Models\Profile;
 use App\Models\Friendship;
+use App\Models\Save;
 class Freelancer extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -54,6 +55,9 @@ class Freelancer extends Authenticatable
         return $this->morphMany(Friendship::class, 'friend_one_able')
            ->unionAll($this->morphMany(Friendship::class, 'friend_two_able'));
     }
-    
 
+    public function saves(){
+        return $this->hasMany(Save::class);
+    }
+    
 }

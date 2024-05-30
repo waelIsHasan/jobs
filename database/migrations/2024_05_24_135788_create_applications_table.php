@@ -15,8 +15,18 @@ return new class extends Migration
             $table->id();
             $table->string("resume");
             $table->enum('status',['prending','approved','rejected']);
-            $table->foreignId('freelancer_id')->constrained('freelancers')->cascadeOnDelete;
-            $table->foreignId('job_id')->constrained('jobs')->cascadeOnDelete;
+          
+            $table->unsignedBigInteger('freelancer_id');
+            $table->foreign('freelancer_id')
+            ->references('id')
+            ->on('freelancers')
+            ->onDelete('cascade');
+            
+            $table->unsignedBigInteger('job_id');
+            $table->foreign('job_id')
+            ->references('id')
+            ->on('jobs')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }
