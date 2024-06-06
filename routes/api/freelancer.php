@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Profile;
 use App\Http\Controllers\SaveController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,5 +59,18 @@ Route::group(['prefix' => 'freelancer', 'middleware' => ['auth:freelancer-api' ,
     Route::get('/unsave-post/{jobId}' , [SaveController::class, 'unsaveJobPost']);
     Route::get('/saved-posts' , [SaveController::class, 'savedPosts']);
 
+    Route::post('/send-message/{receiverId}/role/{receiverType}' , [ChatController::class , 'sendMessage']);
+    Route::get('/messages/{receiver-id}/role/{role}' , [ChatController::class , 'getMessages']);
+});
 
+
+Route::group(['middleware' => ['scope:freelancer,owner']] , function(){
+    Route::get('/hello' , function(){
+        return "hello";
+    });
+});
+
+
+Route::get('/dash' ,function(){
+    return view('testMessageRealtime');
 });
