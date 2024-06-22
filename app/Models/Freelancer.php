@@ -60,4 +60,5 @@ class Freelancer extends Authenticatable
         return $this->hasMany(Save::class);
     }
     
+    
 }

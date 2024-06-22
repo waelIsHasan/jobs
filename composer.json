@@ -13,6 +13,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/socialite": "^5.12",
         "laravel/tinker": "^2.8",
+        "pusher/pusher-php-server": "^7.2",
         "socialiteproviders/google": "^4.1",
         "vlucas/phpdotenv": "^5.6"
     },

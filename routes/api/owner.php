@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Owner\Auth\ResetPasswordOwnerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Owner\PostJobController;
 use App\Http\Controllers\FriendshipController;
 
@@ -57,4 +58,8 @@ Route::group(['prefix' => 'owner', 'middleware' => ['auth:owner-api' , 'scopes:o
     Route::delete('/remove-friend/{id2}/role/{model2}' , [FriendshipController::class, 'removeFriend']);
     Route::get('/get-friends' , [FriendshipController::class, 'show']);
 
+    Route::post('/send-message/{receiverId}/role/{receiverType}' , [ChatController::class , 'sendMessage']);
+    Route::get('/messages/{receiverId}/role/{receiverType}' , [ChatController::class , 'getMessages']);
+
 });
+
