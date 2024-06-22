@@ -13,6 +13,7 @@ class PostJobService{
                 'body' => $request['body'],
                 'required_skills' => $request['required_skills'],
                 'location' => $request['location'],
+                'category_id' => $request['category_id'],
                 'dead_time' => $request['dead_time'],
                 'owner_id' =>$id,                  
             ]);
@@ -28,6 +29,7 @@ class PostJobService{
                 'body' => (($request['body'] == null && !($request->has('body'))) ? $job['body'] : $request['body']),
                 'required_skills' => (($request['required_skills'] == null && !($request->has('required_skills'))) ? $job['required_skills'] : $request['required_skills']),
                 'location' => (($request['location'] == null && !($request->has('location'))) ? $job['location'] : $request['location']),
+                'category_id' => (($request['category_id'] == null && !($request->has('category_id'))) ? $job['category_id'] : $request['category_id']),
                 'dead_time' =>(($request['dead_time'] == null && !($request->has('dead_time'))) ? $job['dead_time'] : $request['dead_time']),
                 'owner_id' =>$id,                  
                       ]);   

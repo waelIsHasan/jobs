@@ -18,7 +18,9 @@ return new class extends Migration
             $table->text('required_skills')->nullable();
             $table->string('location')->nullable();
             $table->date('dead_time')->nullable();
+            $table->bigInteger('category_id')->unsigned();
             $table->bigInteger('owner_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('owner_id')->references('id')->on('owners')->onDelete('cascade');
             $table->timestamps();
         });

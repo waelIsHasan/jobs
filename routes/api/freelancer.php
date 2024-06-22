@@ -49,6 +49,7 @@ Route::group(['prefix' => 'freelancer', 'middleware' => ['auth:freelancer-api' ,
     Route::delete('/remove-friend/{id2}/role/{model2}' , [FriendshipController::class, 'removeFriend']);
     Route::get('/get-friends' , [FriendshipController::class, 'show']);
    
+    Route::post('/searsh' , [ApplicationController::class, 'jobSearsh']);
     Route::post('/apply/{jobId}' , [ApplicationController::class, 'apply']);
     Route::get('/applications' , [ApplicationController::class, 'showApplications']);
     Route::get('/application/{appId}' , [ApplicationController::class, 'showApplication']);
