@@ -12,6 +12,16 @@ class ApplicationController extends Controller
 {
     
     use ResponseTrait;
+
+    public function jobSearsh(Request $request){
+
+      
+        $searsh = $request->only('title','location','dead_time');
+        $job = Job::searsh( $searsh)->get();
+         return $this->successResponse('searsh job' , $job );
+         
+    }
+
     public function apply(Request $request , $jobId){
         
         $id = auth()->id();
