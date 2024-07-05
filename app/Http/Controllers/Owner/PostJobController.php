@@ -58,8 +58,29 @@ class PostJobController extends Controller
         }
         catch(Exception $e){
             return $this->failedResponse($e ,null);
+        }  
         }
+
+        public function showJob($jobId){
+            $id = auth()->id();
+            $job = Job::find($jobId);
+            if($job == null){
+                return $this->failedResponse('job not found !' ,null);
+
+            }
+
+        try{
+            if($job->owner_id == $id){
+               return $this->successResponse('delete job successfully' ,$job);
+            }
+            else 
+            return $this->failedResponse('you do not have permssion' ,null);
+
+
         }
+        catch(Exception $e){
+            return $this->failedResponse($e ,null);
+        }}
 
         public function showJobs(){
             $id = auth()->id();
@@ -110,8 +131,6 @@ class PostJobController extends Controller
             if($application == null){
                 return $this->failedResponse('I can not find the appliction' , null);
             }
-
-
             $job = Job::find($application->job_id);
             if($id == $job->owner_id){
             $application->status = 'rejected';
@@ -122,4 +141,16 @@ class PostJobController extends Controller
             }
     
         }
+
+        public function showApplicationsByOwner(){
+            $user = auth()->user();
+            $jobs = $user->jobs;
+            $arr = [];
+            foreach($jobs as $job){
+                foreach($job->applications as $application){
+                    $arr[] = $application;
+                }
+            }
+            return $this->successResponse('you have '.count($arr).' applications',$arr);
+    }
 }

@@ -41,7 +41,7 @@ Route::post('/register' ,[AuthSeekerController::class , 'register']);
     Route::post('/add-friend/{id2}/role/{model2}' , [FriendshipController::class, 'addFriend']);
     Route::delete('/remove-friend/{id2}/role/{model2}' , [FriendshipController::class, 'removeFriend']);
     Route::get('/get-friends' , [FriendshipController::class, 'show']);
-
+    
     Route::post('/send-message/{receiverId}/role/{receiverType}' , [ChatController::class , 'sendMessage']);
     Route::get('/messages/{receiverId}/role/{receiverType}' , [ChatController::class , 'getMessages']);
 

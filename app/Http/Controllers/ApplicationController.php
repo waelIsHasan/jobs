@@ -72,5 +72,5 @@ class ApplicationController extends Controller
         }else{
             return $this->failedResponse('you do not have permmsion', null);
         }
-    }           
+    } 
 }
