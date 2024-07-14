@@ -15,7 +15,7 @@ class categorySeeder extends Seeder
     {
         Category::create([
         
-            'categoryJob' => 'programming',
+            'categoryJob' => 'transportation',
             
            ]);
            
@@ -26,7 +26,7 @@ class categorySeeder extends Seeder
            ]);
            Category::create([
         
-            'categoryJob' => 'finance',
+            'categoryJob' => 'ai',
             
            ]);
            Category::create([
