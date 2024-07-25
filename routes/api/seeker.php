@@ -8,6 +8,7 @@ use App\Http\Controllers\FriendshipController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\Seeker\ReviewController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -45,5 +46,8 @@ Route::post('/register' ,[AuthSeekerController::class , 'register']);
     Route::post('/send-message/{receiverId}/role/{receiverType}' , [ChatController::class , 'sendMessage']);
     Route::get('/messages/{receiverId}/role/{receiverType}' , [ChatController::class , 'getMessages']);
 
-
+    
+    Route::post('/addReview/{serviceId}' , [ReviewController::class, 'store']);
+    Route::get('/review/{serviceId}' , [ReviewController::class, 'serviceAvgRating']);
+    Route::post('/destroyReview/{reviewId}' , [ReviewController::class, 'destroy']);
 });

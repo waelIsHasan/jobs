@@ -51,6 +51,10 @@ class Freelancer extends Authenticatable
         return $this->hasMany(Application::class);
     }
 
+    public function services(){
+        return $this->hasMany(Service::class);
+    }
+
     public function friends(){
         return $this->morphMany(Friendship::class, 'friend_one_able')
            ->unionAll($this->morphMany(Friendship::class, 'friend_two_able'));
