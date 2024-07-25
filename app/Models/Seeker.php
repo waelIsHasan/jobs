@@ -57,4 +57,9 @@ class Seeker extends Authenticatable
         return $this->morphMany(Friendship::class, 'friend_one_able')
            ->unionAll($this->morphMany(Friendship::class, 'friend_two_able'));
     }
+
+    public function reviews(){
+        return $this->hasMany(Review::class)->cascadeOnDelete();
+        
+    }
 }

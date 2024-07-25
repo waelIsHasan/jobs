@@ -11,6 +11,7 @@ use App\Models\Profile;
 use App\Http\Controllers\SaveController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\Freelancer\PostServiceController;
 use App\Http\Controllers\Owner\PostJobController;
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,11 @@ Route::group(['prefix' => 'freelancer', 'middleware' => ['auth:freelancer-api' ,
     Route::get('/save-post/{jobId}' , [SaveController::class, 'saveJobPost']);
     Route::get('/unsave-post/{jobId}' , [SaveController::class, 'unsaveJobPost']);
     Route::get('/saved-posts' , [SaveController::class, 'savedPosts']);
+
+    Route::post('/post-service' , [PostServiceController::class, 'postService']);
+    Route::put('/update-service/{serviceId}' , [PostServiceController::class, 'updateService']);
+    Route::delete('/delete-service/{serviceId}' , [PostServiceController::class, 'deleteService']);
+    Route::get('/show-services' , [PostServiceController::class, 'showService']);
 
     Route::post('/send-message/{receiverId}/role/{receiverType}' , [ChatController::class , 'sendMessage']);
     Route::get('/messages/{receiver-id}/role/{role}' , [ChatController::class , 'getMessages']);
