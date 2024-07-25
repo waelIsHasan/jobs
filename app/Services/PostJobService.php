@@ -35,7 +35,7 @@ class PostJobService{
                       ]);   
                       return [
                         'success' => true ,
-                        'msg' => 'You updat your job',
+                        'msg' => 'update your job successfully',
                         'data' => $job
                         ];
                     } 

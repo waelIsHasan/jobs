@@ -42,7 +42,7 @@ class Job extends Model
     }
 
     public function applications(){
-        return $this->hasMany(Application::class)->cascadeOnDelete();
+        return $this->hasMany(Application::class);
         
     }
 

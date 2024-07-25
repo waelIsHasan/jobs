@@ -23,10 +23,14 @@ class PostJobController extends Controller
 
     public function postJob(PostJobRequest $request)
         {
+            try{
             $id = auth()->id();
             $response = $this->postJobService->postJob($request  , $id);
             return $this->successResponse('post Job successfully' , $response['job'] );
-          
+            }catch(Exception $e){
+                return $this->failedResponse('You have to enter all attributes' , $e ,400);
+
+            }
         }   
         public function updateJob(Request $request,$jobId){
             $id = auth()->id();
@@ -49,7 +53,6 @@ class PostJobController extends Controller
                 return $this->failedResponse('job not found !' ,null);
 
             }
-
         try{
             if($job->owner_id == $id){
                 $job->delete();
@@ -58,12 +61,37 @@ class PostJobController extends Controller
         }
         catch(Exception $e){
             return $this->failedResponse($e ,null);
+        }  
         }
+
+        public function showJob($jobId){
+            $id = auth()->id();
+            $job = Job::find($jobId);
+            if($job == null){
+                return $this->failedResponse('job not found !' ,null);
+
+            }
+        try{
+               return $this->successResponse('show job successfully' ,$job);
         }
+        catch(Exception $e){
+            return $this->failedResponse($e ,null);
+        }
+    }
 
         public function showJobs(){
             $id = auth()->id();
             $owner = Owner::find($id);
+            return  $this->successResponse('you have '.count($owner->jobs).' job posts' ,$owner->jobs);;
+        }
+        public function showJobsbyFreelancer(){
+            $jobs = Job::all();
+            return  $this->successResponse(''.count($jobs).' job posts' ,$jobs);;
+        }
+
+        public function showJobs_Owner($id){
+            $owner = Owner::find($id);
+            $jobs = $owner->jobs;
             return  $this->successResponse('you have '.count($owner->jobs).' job posts' ,$owner->jobs);;
         }
 
@@ -86,7 +114,7 @@ class PostJobController extends Controller
 
             $application = Application::find($appId);
             if($application == null){
-                return $this->failedResponse('I can not find the appliction' , null);
+                return $this->failedResponse('there is no an appliction' , null);
             }
 
             $job = Job::find($application->job_id);
@@ -108,18 +136,28 @@ class PostJobController extends Controller
             $application = Application::find($appId);
 
             if($application == null){
-                return $this->failedResponse('I can not find the appliction' , null);
+                return $this->failedResponse('there is no an appliction' , null);
             }
-
-
             $job = Job::find($application->job_id);
             if($id == $job->owner_id){
             $application->status = 'rejected';
             $application->save();
             return $this->successResponse('application rejected successfully',null);
             }else{
-                return $this->failedResponse('you not have permssion', null);
+                return $this->failedResponse('you do not have permssion', null);
             }
     
         }
+
+        public function showApplicationsByOwner(){
+            $user = auth()->user();
+            $jobs = $user->jobs;
+            $arr = [];
+            foreach($jobs as $job){
+                foreach($job->applications as $application){
+                    $arr[] = $application;
+                }
+            }
+            return $this->successResponse('you have '.count($arr).' applications',$arr);
+    }
 }

@@ -12,7 +12,7 @@ use App\Http\Controllers\SaveController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Freelancer\PostServiceController;
-
+use App\Http\Controllers\Owner\PostJobController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -51,10 +51,13 @@ Route::group(['prefix' => 'freelancer', 'middleware' => ['auth:freelancer-api' ,
     Route::delete('/remove-friend/{id2}/role/{model2}' , [FriendshipController::class, 'removeFriend']);
     Route::get('/get-friends' , [FriendshipController::class, 'show']);
    
-    Route::post('/searsh' , [ApplicationController::class, 'jobSearsh']);
+    Route::post('/search' , [ApplicationController::class, 'jobSearsh']);
     Route::post('/apply/{jobId}' , [ApplicationController::class, 'apply']);
     Route::get('/applications' , [ApplicationController::class, 'showApplications']);
     Route::get('/application/{appId}' , [ApplicationController::class, 'showApplication']);
+    Route::get('/show-jobs' , [PostJobController::class, 'showJobsbyFreelancer']);
+    Route::get('/show/jobs-owner/{ownerId}', [PostJobController::class , 'showJobs_Owner']);
+    Route::get('/show-job/{jobId}' , [PostJobController::class, 'showJob']);
 
     
     Route::get('/save-post/{jobId}' , [SaveController::class, 'saveJobPost']);
