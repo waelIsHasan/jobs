@@ -7,12 +7,18 @@ use App\Models\Application;
 use App\Models\Freelancer;
 use App\Models\Job;
 use App\Traits\ResponseTrait;
+use App\Services\ApplicationService;
 
 class ApplicationController extends Controller
 {
     
     use ResponseTrait;
 
+    protected $applicationService;
+    public function __construct(ApplicationService $applicationService){
+        $this->applicationService  = $applicationService;
+    }
+    
     public function jobSearsh(Request $request){
 
       
@@ -25,37 +31,15 @@ class ApplicationController extends Controller
     public function apply(Request $request , $jobId){
         
         $id = auth()->id();
-
-        $existingJob = Job::find($jobId);
-        
-        if($existingJob == null)
-        return $this->failedResponse('I can not find this job', null);
-
-        $existingApplication = Application::where('freelancer_id',$id)
-        ->where('job_id',$jobId)->first();
-     
-        if($existingApplication){
-            return $this->failedResponse('you have already this application', null);
+        $response = $this->applicationService->apply($request , $jobId , $id);
+        if($response['success']){
+            return $this->successResponse($response['msg'] , $response['data']);
         }
-        $request->validate([
-            'resume' => 'required|file',
-        ]);
-
-        if ($request->hasFile('resume')){
-            $resume = $request->file('resume')->getClientOriginalName();
-            // upload to server
-             $path = $request->file('resume')->storeAs('',$resume,'empco_resume');
-        
-            }
-
-        $application = Application::create([
-            'resume' => ("resumes/".$path),
-           // 'cover_later' => $request->cover_later,
-            'freelancer_id' =>$id,
-            'job_id'=>$jobId,                 
-        ]);
-        return $this->successResponse('send application' , $application );
+        else{
+            return $this->failedResponse($response['msg'] ,null);
+        }
     }
+    
     public function showApplications(Request $request){
 
         $id = auth()->id();
@@ -65,7 +49,7 @@ class ApplicationController extends Controller
             $applications = $freelancer->applications;
             return $this->successResponse('your applications' , $applications );
         }else{
-             return $this->failedResponse('you dont have permssion', null);
+             return $this->failedResponse('you dont have permission', null);
         }
 
     }
@@ -75,12 +59,12 @@ class ApplicationController extends Controller
         $id = auth()->id();
         $application = Application::find($appId);
         if($application == null){
-            return $this->failedResponse('I can not find this application', null);
+            return $this->failedResponse('No Application match your query', null);
         }
         if($application->freelancer_id ==$id){
             return $this->successResponse('your application' , $application );
         }else{
-            return $this->failedResponse('you do not have permmsion', null);
+            return $this->failedResponse('you do not have permission', null);
         }
     } 
 }

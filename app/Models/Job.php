@@ -16,7 +16,9 @@ class Job extends Model
         'location',
         'dead_time',
         'owner_id',
-        'category_id'
+        'category_id',
+        'salary',
+        'type_job'
     ];
 
     public function scopeSearsh($query,$searsh){

@@ -35,7 +35,7 @@ Route::post('/register' ,[AuthSeekerController::class , 'register']);
  Route::group(['prefix' => 'seeker', 'middleware' => ['auth:seeker-api' , 'scopes:seeker']] , function(){
     //logout 
     Route::post('/logout' ,[AuthSeekerController::class , 'logout'] );
-    Route::post('/edit-profile' , [ProfileController::class, 'editProfile']);
+    Route::post('/modify-profile' , [ProfileController::class, 'editProfile']);
     Route::get('/profile' , [ProfileController::class, 'getProfile']);
     Route::post('/upload' , [ProfileController::class, 'uploadImage']);
     Route::get('/show-image' , [ProfileController::class, 'showImage']);

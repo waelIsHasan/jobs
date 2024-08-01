@@ -34,6 +34,12 @@ Route::group(['prefix' =>'freelancer' ], function(){
     Route::post('/forgetpassword' ,[ResetPasswordFreelancerController::class , 'forgotPassword']);
     Route::post('/check-code' ,[ResetPasswordFreelancerController::class , 'checkCode'] );
     Route::post('/resetpassword' ,[ResetPasswordFreelancerController::class , 'resetPassword'] );
+    Route::get('/show/jobs-owner/{ownerId}', [PostJobController::class , 'showJobs_Owner']);
+    Route::get('/show-job/{jobId}' , [PostJobController::class, 'showJob']);
+    Route::get('/show-job-category/{categoryId}' , [PostJobController::class, 'showJobsByCategory']);
+    Route::get('/show-jobs' , [PostJobController::class, 'showJobsbyFreelancer']);
+
+
 });
 
 
@@ -41,7 +47,7 @@ Route::group(['prefix' => 'freelancer', 'middleware' => ['auth:freelancer-api' ,
     //logout 
     Route::post('/logout' ,[AuthFreelancerController::class , 'logout'] );
     
-    Route::post('/edit-profile' , [ProfileController::class, 'editProfile']);
+    Route::post('/modify-profile' , [ProfileController::class, 'editProfile']);
     Route::get('/profile' , [ProfileController::class, 'getProfile']);
     Route::post('/upload' , [ProfileController::class, 'uploadImage']);
     Route::get('/show-image' , [ProfileController::class, 'showImage']);
@@ -55,10 +61,7 @@ Route::group(['prefix' => 'freelancer', 'middleware' => ['auth:freelancer-api' ,
     Route::post('/apply/{jobId}' , [ApplicationController::class, 'apply']);
     Route::get('/applications' , [ApplicationController::class, 'showApplications']);
     Route::get('/application/{appId}' , [ApplicationController::class, 'showApplication']);
-    Route::get('/show-jobs' , [PostJobController::class, 'showJobsbyFreelancer']);
-    Route::get('/show/jobs-owner/{ownerId}', [PostJobController::class , 'showJobs_Owner']);
-    Route::get('/show-job/{jobId}' , [PostJobController::class, 'showJob']);
-
+    
     
     Route::get('/save-post/{jobId}' , [SaveController::class, 'saveJobPost']);
     Route::get('/unsave-post/{jobId}' , [SaveController::class, 'unsaveJobPost']);

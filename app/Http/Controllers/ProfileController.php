@@ -47,7 +47,7 @@ class ProfileController extends Controller
             $user = auth()->user();
             $model = $this->checkService->check($user);
             $user = $model::where('id' ,$id)->first();
-            if (!$request->hasFile('file')){
+            if (!$request->hasFile('image')){
                 return $this->failedResponse('you have to uplaod file first',null);
             }
             $response = $this->profileService->uploadImage($request ,$user , $id ,$model);

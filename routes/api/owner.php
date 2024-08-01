@@ -30,22 +30,23 @@ Route::group(['prefix' =>'owner' ], function(){
     Route::post('forgetpassword' ,[ResetPasswordOwnerController::class , 'forgotPassword']);
     Route::post('check-code' ,[ResetPasswordOwnerController::class , 'checkCode'] );
     Route::post('resetpassword' ,[ResetPasswordOwnerController::class , 'resetPassword'] );
+    Route::get('/show-job/{jobId}' , [PostJobController::class, 'showJob']);
+
 });
 Route::group(['prefix' => 'owner', 'middleware' => ['auth:owner-api' , 'scopes:owner']] , function(){
     //logout 
     Route::post('/logout' ,[AuthOwnerController::class , 'logout'] );
     //profile
-    Route::post('/edit-profile' , [ProfileController::class, 'editProfile']);
+    Route::post('/modify-profile' , [ProfileController::class, 'editProfile']);
     Route::get('/profile' , [ProfileController::class, 'getProfile']);
     Route::post('/upload' , [ProfileController::class, 'uploadImage']);
     Route::get('/show-image' , [ProfileController::class, 'showImage']);
-    
+
     //jobs
     Route::post('/post-job' , [PostJobController::class, 'postJob']);
     Route::put('/update-job/{jobId}' , [PostJobController::class, 'updateJob']);
     Route::delete('/delete-job/{jobId}' , [PostJobController::class, 'deleteJob']);
     Route::get('/show-jobs' , [PostJobController::class, 'showJobs']);
-    Route::get('/show-job/{jobId}' , [PostJobController::class, 'showJob']);
 
 
     Route::get('/application/{jobId}' , [PostJobController::class, 'showApplication']);
@@ -53,7 +54,6 @@ Route::group(['prefix' => 'owner', 'middleware' => ['auth:owner-api' , 'scopes:o
     Route::get('/reject-application/{appId}' , [PostJobController::class, 'rejectApplication']);
     Route::get('/applications' , [PostJobController::class , 'showApplicationsByOwner']);
 
-   
     //firendship
     Route::post('/add-friend/{id2}/role/{model2}' , [FriendshipController::class, 'addFriend']);
     Route::delete('/remove-friend/{id2}/role/{model2}' , [FriendshipController::class, 'removeFriend']);

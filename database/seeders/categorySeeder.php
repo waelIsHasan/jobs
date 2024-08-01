@@ -15,33 +15,33 @@ class categorySeeder extends Seeder
     {
         Category::create([
         
-            'categoryJob' => 'transportation',
+            'categoryJob' => 'Transportation',
             
            ]);
            
            Category::create([
         
-            'categoryJob' => 'it',
+            'categoryJob' => 'It',
             
            ]);
            Category::create([
         
-            'categoryJob' => 'ai',
+            'categoryJob' => 'Ai',
             
            ]);
            Category::create([
         
-            'categoryJob' => 'marketing',
+            'categoryJob' => 'Marketing',
             
            ]);
            Category::create([
         
-            'categoryJob' => 'education',
+            'categoryJob' => 'Education',
             
            ]);
            Category::create([
         
-            'categoryJob' => 'healthcare',
+            'categoryJob' => 'Healthcare',
             
            ]);
     

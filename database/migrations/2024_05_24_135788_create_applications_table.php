@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
             $table->string("resume");
-            $table->enum('status',['prending','approved','rejected']);
-          
+            $table->enum('status',['pending','approved','rejected']);
             $table->unsignedBigInteger('freelancer_id');
             $table->foreign('freelancer_id')
             ->references('id')

@@ -14,6 +14,7 @@ class Profile extends Model
     'home_place' ,
     'work_place' ,
     'birthday' ,
+    
     'profileable_id' ,
     'profileable_type'
 ];

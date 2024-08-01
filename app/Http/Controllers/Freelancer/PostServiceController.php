@@ -46,13 +46,13 @@ class PostServiceController extends Controller
             $id = auth()->id();
             $service = Service::find($serviceId);
             if($service == null){
-                return $this->failedResponse('service not found !' ,null);
+                return $this->failedResponse('no Service match with your query' ,null);
 
             }
 
         try{
             if($service->freelancer_id == $id){
-                $job->delete();
+                $service->delete();
                return $this->successResponse('delete service successfully' ,null );
             }
         }

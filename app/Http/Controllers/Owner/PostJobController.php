@@ -10,154 +10,160 @@ use App\Models\Job;
 use App\Models\Application;
 use App\Services\PostJobService;
 use Exception;
+use App\Models\Category;
 
 use App\Http\Requests\PostJobRequest;
-
+use App\Services\ApplicationService;
 class PostJobController extends Controller
 {
     use ResponseTrait;
     protected $postJobService;
-    public function __construct(PostJobService $postJobService){
+    protected $applicationService;
+
+    public function __construct(PostJobService $postJobService  , ApplicationService $applicationService)
+    {
         $this->postJobService = $postJobService;
+        $this->applicationService =$applicationService; 
     }
 
     public function postJob(PostJobRequest $request)
-        {
-            try{
+    {
+        try {
             $id = auth()->id();
-            $response = $this->postJobService->postJob($request  , $id);
-            return $this->successResponse('post Job successfully' , $response['job'] );
-            }catch(Exception $e){
-                return $this->failedResponse('You have to enter all attributes' , $e ,400);
+            $response = $this->postJobService->postJob($request, $id);
+            return $this->successResponse('post Job successfully', $response['job']);
+        } catch (Exception $e) {
+            return $this->failedResponse('You have to enter all attributes', $e, 400);
 
-            }
-        }   
-        public function updateJob(Request $request,$jobId){
-            $id = auth()->id();
-            $job = Job::find($jobId);
-            
-            $response = $this->postJobService->updateJob($request,$id,$job);
-            if ($response['success']) {
-                return $this->successResponse($response['msg'], $response['data']);
-            } else {
-                return $this->failedResponse($response['msg'], null, $response['status']);
-            }   
-            
-            
+        }
+    }
+    public function updateJob(Request $request, $jobId)
+    {
+        $id = auth()->id();
+        $job = Job::find($jobId);
+
+        $response = $this->postJobService->updateJob($request, $id, $job);
+        if ($response['success']) {
+            return $this->successResponse($response['msg'], $response['data']);
+        } else {
+            return $this->failedResponse($response['msg'], null, $response['status']);
         }
 
-        public function deleteJob($jobId){
-            $id = auth()->id();
-            $job = Job::find($jobId);
-            if($job == null){
-                return $this->failedResponse('job not found !' ,null);
 
-            }
-        try{
-            if($job->owner_id == $id){
-                $job->delete();
-               return $this->successResponse('delete job successfully' ,null );
-            }
-        }
-        catch(Exception $e){
-            return $this->failedResponse($e ,null);
-        }  
-        }
+    }
 
-        public function showJob($jobId){
-            $id = auth()->id();
-            $job = Job::find($jobId);
-            if($job == null){
-                return $this->failedResponse('job not found !' ,null);
-
-            }
-        try{
-               return $this->successResponse('show job successfully' ,$job);
-        }
-        catch(Exception $e){
-            return $this->failedResponse($e ,null);
+    public function deleteJob($jobId)
+    {
+        $id = auth()->id();
+        $response = $this->postJobService->deleteJob($jobId , $id);
+        if ($response['success']) {
+            return $this->successResponse($response['msg'],null);
+        } else {
+            return $this->failedResponse($response['msg'], null);
         }
     }
 
-        public function showJobs(){
-            $id = auth()->id();
-            $owner = Owner::find($id);
-            return  $this->successResponse('you have '.count($owner->jobs).' job posts' ,$owner->jobs);;
-        }
-        public function showJobsbyFreelancer(){
-            $jobs = Job::all();
-            return  $this->successResponse(''.count($jobs).' job posts' ,$jobs);;
-        }
 
-        public function showJobs_Owner($id){
-            $owner = Owner::find($id);
-            $jobs = $owner->jobs;
-            return  $this->successResponse('you have '.count($owner->jobs).' job posts' ,$owner->jobs);;
+    public function showJob($jobId)
+    {
+        $job = Job::find($jobId);
+        if ($job == null) {
+            return $this->failedResponse('No job match your query!', null);
         }
+        try {
+            return $this->successResponse('show job successfully', $job);
+        } catch (Exception $e) {
+            return $this->failedResponse($e, null);
+        }
+    }
 
-        public function showApplication($jobId){
-            $id = auth()->id();
-           $job = Job::find($jobId);
+    public function showJobs()
+    {
+        $id = auth()->id();
+        $owner = Owner::find($id);
+        return $this->successResponse (count($owner->jobs) . ' job posts', $owner->jobs);
+        ;
+    }
 
-        if($job){
+    public function showJobsbyFreelancer()
+    {
+        $jobs = Job::all();
+        return $this->successResponse('' . count($jobs) . ' job posts', $jobs);
+        ;
+    }
+
+    public function showJobs_Owner($id)
+    {
+        try{
+        $owner = Owner::find($id);
+        $jobs = $owner->jobs;
+        return $this->successResponse( count($jobs) . ' job posts', $jobs);
+        ;
+        }catch(Exception $e){
+            return $this->failedResponse('No Company match your query', null);
+        }
+    }
+    
+
+    public function showApplication($jobId)
+    {
+        $job = Job::find($jobId);
+
+        if ($job) {
             $applications = $job->applications;
             return $this->successResponse('applications', $applications);
-        }else{
+        } else {
             return $this->failedResponse('job not found', null);
         }
 
+    }
+    public function showJobsByCategory($categoryId){
+
+        $category = Category::find($categoryId);
+        if($category){
+            $jobs = $category->jobs;
+            return $this->successResponse( count($jobs) . ' job posts', $jobs);
         }
-
-        public function approveApplication($appId){
-            $id = auth()->id();
-            $user = auth()->user();
-
-            $application = Application::find($appId);
-            if($application == null){
-                return $this->failedResponse('there is no an appliction' , null);
-            }
-
-            $job = Job::find($application->job_id);
-
-            if($id == $job->owner_id){
-            $application->status = 'approved';
-            $application->save();
-            return $this->successResponse('application approved successfully',null);
-            }else{
-                return $this->failedResponse('you not have permssion', null);
-            }
-
+        else{
+            return $this->failedResponse("No Category match your query" , null);
         }
+    }
 
-
-        public function rejectApplication($appId){
-            $id = auth()->id();
-            $user = auth()->user();
-            $application = Application::find($appId);
-
-            if($application == null){
-                return $this->failedResponse('there is no an appliction' , null);
+    public function approveApplication($appId)
+    {
+        $id = auth()->id();
+        $response = $this->applicationService->approveApplication($appId , $id);
+            if($response['success']){
+                return $this->successResponse($response['msg'] , null);
             }
-            $job = Job::find($application->job_id);
-            if($id == $job->owner_id){
-            $application->status = 'rejected';
-            $application->save();
-            return $this->successResponse('application rejected successfully',null);
-            }else{
-                return $this->failedResponse('you do not have permssion', null);
+            else{
+                return $this->failedResponse($response['msg'] , null);
             }
-    
+    }
+
+
+    public function rejectApplication($appId)
+    {
+        $id = auth()->id();
+        $response = $this->applicationService->rejectApplication($appId , $id);
+            if($response['success']){
+                return $this->successResponse($response['msg'] , null);
+            }
+            else{
+                return $this->failedResponse($response['msg'] , null);
+            }
+    }
+
+    public function showApplicationsByOwner()
+    {
+        $user = auth()->user();
+        $jobs = $user->jobs;
+        $arr = [];
+        foreach ($jobs as $job) {
+            foreach ($job->applications as $application) {
+                $arr[] = $application;
+            }
         }
-
-        public function showApplicationsByOwner(){
-            $user = auth()->user();
-            $jobs = $user->jobs;
-            $arr = [];
-            foreach($jobs as $job){
-                foreach($job->applications as $application){
-                    $arr[] = $application;
-                }
-            }
-            return $this->successResponse('you have '.count($arr).' applications',$arr);
+        return $this->successResponse('you have ' . count($arr) . ' applications', $arr);
     }
 }
