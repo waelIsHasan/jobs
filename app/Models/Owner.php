@@ -71,4 +71,13 @@ class Owner extends Authenticatable
            ->unionAll($this->morphMany(Friendship::class, 'friend_two_able'));
     }
     
+    /**
+     * Get the license associated with the Owner
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function license(): HasOne
+    {
+        return $this->hasOne(CompanyLicense::class);
+    }
 }

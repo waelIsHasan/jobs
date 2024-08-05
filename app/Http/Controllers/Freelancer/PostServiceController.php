@@ -23,10 +23,27 @@ class PostServiceController extends Controller
 
     public function postService(ServiceRequest $request)
         {
-            $id = auth()->id();
-            $response = $this->postService->postService($request  , $id);
-            return $this->successResponse('post Service successfully' , $response['service'] );
-          
+            try {
+            
+                $id = auth()->id();
+              
+                $response = $this->postService->postService($request, $id);
+       
+                if($response['success']){
+                    return $this->successResponse('post service successfully', $response['service']);
+                }
+                       
+               elseif($response['status'] == 401){
+                    return $this->failedResponse($response['msg'] , null , 401);
+                }
+                elseif($response['status'] == 404){
+                    return $this->failedResponse($response['msg'] , null , 404);
+                }
+            } catch (Exception $e) {
+                return $this->failedResponse('You have to enter all attributes', $e, 400);
+    
+            }
+        
         }   
         public function updateService(Request $request,$serviceId){
             $id = auth()->id();
@@ -69,6 +86,17 @@ class PostServiceController extends Controller
 
 
         
+        public function uploadLicense(Request $request){
         
+            $id = auth()->id();
+            $response = $this->postService->uploadLicense($request , $id);
+            if($response['success']){
+                return $this->successResponse($response['msg'] , $response['data']);
+            }
+            elseif($response['status'] == 401){
+                return $this->failedResponse($response['msg'] , null , 401);
+            }
+           
+        }
 
 }

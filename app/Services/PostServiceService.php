@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\Service;
 use App\Models\Freelancer;
+use App\Models\EmpplyeLicense;
 use Exception;
 
 class PostServiceService
@@ -11,6 +12,16 @@ class PostServiceService
     public function postService($request, $id)
     {
 
+        $freelancer=EmpplyeLicense::where('freelancer_id',$id)->get();
+        if($freelancer->isEmpty()){
+            return [
+                'success' => false,
+                'msg' => ' you dont have license ',
+                'status' => 404];
+        }else{
+            $freelancerLicense = $freelancer->where('status','approved')->first();
+        
+            if($freelancerLicense){
         $service = Service::create([
             'name' => $request['name'],
             'description' => $request['description'],
@@ -19,7 +30,18 @@ class PostServiceService
             'category_id' => $request['category_id'],
             'freelancer_id' => $id,
         ]);
-        return ['service' => $service];
+        return [
+            'success' => true,
+            'msg' => 'You post job successfully',
+            'service' => $service
+        ];
+        }else{
+            return [
+                'success' => false,
+                'msg' => 'check your license first',
+                'status' => 401];
+        }
+    }
 
     }
 
@@ -60,5 +82,34 @@ class PostServiceService
             ];
         }
     }
+
+    public function uploadLicense($request, $id)
+    {
+
+        $freelancer=EmpplyeLicense::where('freelancer_id',$id)->first();
+        if($freelancer){
+            return [
+                'success' => false,
+                'msg' => 'you have license alredy',
+                'status' => 401];
+        }else{
+        $request->validate([
+            'license_file' => 'required|file',
+        ]);
+
+        if ($request->hasFile('license_file')) {
+            $license_file = $request->file('license_file')->getClientOriginalName();
+            // upload to server
+
+            $path = $request->file('license_file')->storeAs('', date('mdYHis') . uniqid() . $license_file, 'empco_resume');
+
+        }
+        $freelancerLicense = EmpplyeLicense::create([
+            'license_file' => ("license_file/" . $path),
+            'freelancer_id' => $id,
+        ]);
+        return ['success' => true, 'data' => $freelancerLicense, 'msg' => 'upload successfully'];
+    }
+} 
 
 }

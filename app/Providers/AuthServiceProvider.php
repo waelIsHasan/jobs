@@ -28,7 +28,8 @@ class AuthServiceProvider extends ServiceProvider
         Passport::tokensCan([
             'seeker'=>'user who searchs for job',
             'owner' =>'owner who have a job',
-            'freelancer' =>'freelancer who have a services'
+            'freelancer' =>'freelancer who have a services',
+            'admin' =>'admin who have empco',
         ]);
 
     }

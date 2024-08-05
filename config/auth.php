@@ -58,6 +58,15 @@ return [
             'provider' => 'owners',
         ],
 
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+        'admin-api' => [
+            'driver' => 'passport',
+            'provider' => 'admins',
+        ],
+
         'freelancer' => [
             'driver' => 'session',
             'provider' => 'freelancers',
@@ -103,6 +112,11 @@ return [
         'freelancers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Freelancer::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [

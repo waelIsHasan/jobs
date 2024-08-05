@@ -19,7 +19,7 @@ class BaseAuthService
             ];
         }
         //send otp 
-        Mail::to($request->email)->send(new VerifiedEmailMail($request->email));
+      //  Mail::to($request->email)->send(new VerifiedEmailMail($request->email));
         //create new user
         $input = $request->all();
         $input['password'] = Hash::make($request['password']);
@@ -70,6 +70,33 @@ class BaseAuthService
 
         }
     }
+    
+    public function loginOfAdmin($request, $model)
+    {
+        //name of model in lower case
+        $nameOfModel = strtolower(class_basename($model));
+        // check
+        if (auth()->guard($nameOfModel)->attempt(['email' => $request->email, 'password' => $request->password])) {
+            config(['auth.guards.api.provider' => $nameOfModel]);
+            $user = $model::query()->select($nameOfModel . 's.*')->find(auth()->guard($nameOfModel)->user()->id);
+
+            $data['token'] = $user->createToken('tokenfor' . class_basename($model), [$nameOfModel])->accessToken;
+            return [
+                'success' => true,
+                'msg' => 'You have Logged in successfully',
+                'data' => $data
+            ];
+        } else {
+
+            return [
+                'success' => false,
+                'msg' => 'password or email is not right',
+                'status' => 400
+            ];
+
+        }
+    }
+
 
     public function logout($request)
     {

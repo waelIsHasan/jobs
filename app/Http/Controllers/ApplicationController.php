@@ -30,13 +30,36 @@ class ApplicationController extends Controller
 
     public function apply(Request $request , $jobId){
         
-        $id = auth()->id();
-        $response = $this->applicationService->apply($request , $jobId , $id);
-        if($response['success']){
-            return $this->successResponse($response['msg'] , $response['data']);
-        }
-        else{
-            return $this->failedResponse($response['msg'] ,null);
+        // $id = auth()->id();
+        // $response = $this->applicationService->apply($request , $jobId , $id);
+        // if($response['success']){
+        //     return $this->successResponse($response['msg'] , $response['data']);
+        // }
+        // else{
+        //     return $this->failedResponse($response['msg'] ,null);
+        // }
+
+        try {
+            
+            $id = auth()->id();
+          
+            $response = $this->applicationService->apply($request , $jobId , $id);
+            if($response['success']){
+                return $this->successResponse('applay Job successfully', $response['application']);
+            }
+                   
+           elseif($response['status'] == 401){
+                return $this->failedResponse($response['msg'] , null , 401);
+            }
+            elseif($response['status'] == 404){
+                return $this->failedResponse($response['msg'] , null , 404);
+            }
+            elseif($response['status'] == 403){
+                return $this->failedResponse($response['msg'] , null , 403);
+            }
+        } catch (Exception $e) {
+            return $this->failedResponse('You have to enter all attributes', $e, 400);
+
         }
     }
     

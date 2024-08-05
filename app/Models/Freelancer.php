@@ -64,5 +64,10 @@ class Freelancer extends Authenticatable
         return $this->hasMany(Save::class);
     }
     
+
+    public function freelancerLicense(): HasOne
+    {
+        return $this->hasOne(FreelancerLicense::class);
+    }
     
 }
