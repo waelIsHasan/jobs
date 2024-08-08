@@ -11,7 +11,7 @@ use App\Models\Application;
 use App\Services\PostJobService;
 use Exception;
 use App\Models\Category;
-
+use App\Models\CompanyLicense;
 use App\Http\Requests\PostJobRequest;
 use App\Services\ApplicationService;
 class PostJobController extends Controller
@@ -28,10 +28,22 @@ class PostJobController extends Controller
 
     public function postJob(PostJobRequest $request)
     {
-        try {
+       try {
+            
             $id = auth()->id();
+          
             $response = $this->postJobService->postJob($request, $id);
-            return $this->successResponse('post Job successfully', $response['job']);
+   
+            if($response['success']){
+                return $this->successResponse('post Job successfully', $response['job']);
+            }
+                   
+           elseif($response['status'] == 401){
+                return $this->failedResponse($response['msg'] , null , 401);
+            }
+            elseif($response['status'] == 404){
+                return $this->failedResponse($response['msg'] , null , 404);
+            }
         } catch (Exception $e) {
             return $this->failedResponse('You have to enter all attributes', $e, 400);
 
@@ -166,4 +178,29 @@ class PostJobController extends Controller
         }
         return $this->successResponse('you have ' . count($arr) . ' applications', $arr);
     }
+
+    public function uploadLicense(Request $request){
+        
+        $id = auth()->id();
+        $response = $this->postJobService->uploadLicense($request , $id);
+        if($response['success']){
+            return $this->successResponse($response['msg'] , $response['data']);
+        }
+        elseif($response['status'] == 401){
+            return $this->failedResponse($response['msg'] , null , 401);
+        }
+       
+    }
+
+    public function checklicense(Request $request){
+        $id = auth()->id();
+        $company=CompanyLicense::where('owner_id',$id)->get();
+        if($company->isEmpty()){
+            return $this->failedResponse('you dont have license' , null , 401);
+           
+        }else{
+            return $this->successResponse('status your license',$company);
+        }
+    }
+
 }

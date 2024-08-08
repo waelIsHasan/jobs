@@ -27,6 +27,19 @@ class Service extends Model
         return $this->hasMany(Review::class)->cascadeOnDelete();
         
     }
-
+    
+    public function scopeSearsh($query,$searsh){
+        if(!empty($searsh['name'])){
+            $query->where('name','like',"%{$searsh['name']}%");
+        }
+        if(!empty($searsh['price'])){
+            $query->where('price','like',"%{$searsh['price']}%");
+        }
+        if(!empty($searsh['description'])){
+            $query->where('description','like',"%{$searsh['description']}%");
+        }
+ 
+    }
 
 }
+

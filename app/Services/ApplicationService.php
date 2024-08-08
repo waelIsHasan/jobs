@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\Job;
 use App\Models\Owner;
+use App\Models\EmpplyeLicense;
 use Exception;
 use App\Models\Application;
 
@@ -18,11 +19,26 @@ class ApplicationService
         if ($existingJob == null)
             return ['msg' => 'No job match with your query', 'success' => false];
 
+            $freelancer=EmpplyeLicense::where('freelancer_id',$id)->get();
+            if($freelancer->isEmpty()){
+                return [
+                    'success' => false,
+                    'msg' => ' you dont have license ',
+                    'status' => 404];
+            }else{
+
+            $freelancerLicense = $freelancer->where('status','approved')->first();
+        
+             if($freelancerLicense){
         $existingApplication = Application::where('freelancer_id', $id)
             ->where('job_id', $jobId)->first();
 
         if ($existingApplication) {
-            return ['msg' => 'You have already applied on this job', 'success' => false];
+            return [
+                'success' => false,
+                'msg' => ' You have already applied on this job ',
+                'status' => 403];
+          
         }
         $request->validate([
             'resume' => 'required|file',
@@ -40,7 +56,18 @@ class ApplicationService
             'freelancer_id' => $id,
             'job_id' => $jobId,
         ]);
-        return ['success' => true, 'data' => $application, 'msg' => 'apply successfully'];
+        return [
+            'success' => true,
+            'msg' => 'You applay job successfully',
+            'application' => $application
+        ];
+        }else{
+            return [
+                'success' => false,
+                'msg' => 'check your license first',
+                'status' => 401];
+        }
+    }
     }
 
     public function approveApplication($appId, $id)

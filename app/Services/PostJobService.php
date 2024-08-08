@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\Job;
 use App\Models\Owner;
+use App\Models\CompanyLicense;
 use Exception;
 use App\Traits\HelperTrait;
 
@@ -12,7 +13,16 @@ class PostJobService
 
     public function postJob($request, $id)
     {
-
+        $company=CompanyLicense::where('owner_id',$id)->get();
+        if($company->isEmpty()){
+            return [
+                'success' => false,
+                'msg' => ' you dont have license ',
+                'status' => 404];
+        }else{
+        $companyLicense = $company->where('status','approved')->first();
+        
+        if($companyLicense){
         $job = Job::create([
             'title' => $request['title'],
             'body' => $request['body'],
@@ -24,9 +34,20 @@ class PostJobService
             'type_job' => $request['type_job'],
             'owner_id' => $id,
         ]);
-        return ['job' => $job];
-
+        return [
+            'success' => true,
+            'msg' => 'You post job successfully',
+            'job' => $job
+        ];
+        }else{
+            return [
+                'success' => false,
+                'msg' => 'check your license first',
+                'status' => 401];
+        }
     }
+}
+
 
     public function updateJob($request, $id, $job)
     {
@@ -89,6 +110,38 @@ class PostJobService
             return ['msg' => $e, 'success' => false];
         }
     }
+
+
+    public function uploadLicense($request, $id)
+    {
+
+        $company=CompanyLicense::where('owner_id',$id)->first();
+        if($company){
+            return [
+                'success' => false,
+                'msg' => 'you have license alredy',
+                'status' => 401];
+        }else{
+        $request->validate([
+            'license_file' => 'required|file',
+        ]);
+
+        if ($request->hasFile('license_file')) {
+            $license_file = $request->file('license_file')->getClientOriginalName();
+            // upload to server
+
+            $path = $request->file('license_file')->storeAs('', date('mdYHis') . uniqid() . $license_file, 'empco_resume');
+
+        }
+        $companyLicense = CompanyLicense::create([
+            'license_file' => ("license_file/" . $path),
+            'owner_id' => $id,
+        ]);
+        return ['success' => true, 'data' => $companyLicense, 'msg' => 'upload successfully'];
+    }
+} 
+
+    
 
 
 }

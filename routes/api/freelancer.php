@@ -74,6 +74,8 @@ Route::group(['prefix' => 'freelancer', 'middleware' => ['auth:freelancer-api' ,
 
     Route::post('/send-message/{receiverId}/role/{receiverType}' , [ChatController::class , 'sendMessage']);
     Route::get('/messages/{receiver-id}/role/{role}' , [ChatController::class , 'getMessages']);
+
+    Route::post('/upload-license' , [PostServiceController::class, 'uploadLicense']);
 });
 
 

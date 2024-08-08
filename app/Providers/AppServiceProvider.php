@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
     'Freelancer' => 'App\Models\Freelancer',
     'Seeker' => 'App\Models\Seeker',
     'Owner' => 'App\Models\Owner',
+    'Admin'=>'App\Models\Admin',
     ]);
     }
 }
