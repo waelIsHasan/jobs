@@ -84,6 +84,4 @@ Route::group(['middleware' => ['scope:freelancer,owner']] , function(){
 });
 
 
-Route::get('/dash' ,function(){
-    return view('testMessageRealtime');
-});
+

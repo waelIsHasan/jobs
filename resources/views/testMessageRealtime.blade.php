@@ -11,7 +11,7 @@
       cluster: 'eu'
     });
 
-    var channel = pusher.subscribe('chat3');
+    var channel = pusher.subscribe('chat1');
     channel.bind('.myBroadcast', function(data) {
       alert(JSON.stringify(data));
       console.log(data)

@@ -34,6 +34,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    
+    'liama' =>[
+        'secret' =>env('LIAMA_SECRET_KEY')
+    ]
 
 ];

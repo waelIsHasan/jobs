@@ -28,3 +28,7 @@ Route::get('/auth/owner/google/callback', [AuthGoogleOwnerController::class , 'h
 
 Route::get('/auth/redirect/freelancer', [AuthGoogleFreelancerController::class , 'redirectToGoogleFreelancer']);
 Route::get('/auth/freelancer/google/callback', [AuthGoogleFreelancerController::class , 'handleGoogleCallbackFreelancer']);
+
+Route::get('/dash' ,function(){
+    return view('testMessageRealtime');
+});

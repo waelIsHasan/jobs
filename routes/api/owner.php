@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Owner\PostJobController;
 use App\Http\Controllers\FriendshipController;
+use App\Http\Controllers\Owner\AIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,12 @@ Route::group(['prefix' => 'owner', 'middleware' => ['auth:owner-api' , 'scopes:o
 
     Route::post('/send-message/{receiverId}/role/{receiverType}' , [ChatController::class , 'sendMessage']);
     Route::get('/messages/{receiverId}/role/{receiverType}' , [ChatController::class , 'getMessages']);
+    
+    //AI-Liama
+    Route::post('/ai' , [AIController::class , 'generateDescriptionJob']);
+
 
 });
+
+
 

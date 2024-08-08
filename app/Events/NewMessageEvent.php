@@ -37,6 +37,4 @@ class NewMessageEvent  implements ShouldBroadcast
     {
        return 'myBroadcast';
     }
-
-
 }
