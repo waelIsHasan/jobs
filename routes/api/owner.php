@@ -65,8 +65,7 @@ Route::group(['prefix' => 'owner', 'middleware' => ['auth:owner-api' , 'scopes:o
     
     //AI-Liama
     Route::post('/ai' , [AIController::class , 'generateDescriptionJob']);
-
-
+    
     //license
     Route::post('/upload-license' , [PostJobController::class, 'uploadLicense']);
     Route::get('/check-license' , [PostJobController::class, 'checkLicense']);

@@ -21,9 +21,7 @@ use App\Http\Controllers\Seeker\ApplayToServiceController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 Route::group(['prefix' =>'seeker' ], function(){
 
 Route::post('/register' ,[AuthSeekerController::class , 'register']);
@@ -47,7 +45,7 @@ Route::post('/register' ,[AuthSeekerController::class , 'register']);
     Route::post('/send-message/{receiverId}/role/{receiverType}' , [ChatController::class , 'sendMessage']);
     Route::get('/messages/{receiverId}/role/{receiverType}' , [ChatController::class , 'getMessages']);
 
-    Route::post('/searsh' , [ApplayToServiceController::class, 'serviceSearsh']);
+    Route::post('/search' , [ApplayToServiceController::class, 'serviceSearsh']);
     
     Route::post('/addReview/{serviceId}' , [ReviewController::class, 'store']);
     Route::get('/review/{serviceId}' , [ReviewController::class, 'serviceAvgRating']);

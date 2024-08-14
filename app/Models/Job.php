@@ -18,7 +18,8 @@ class Job extends Model
         'owner_id',
         'category_id',
         'salary',
-        'type_job'
+        'type_job',
+        'work_nature'
     ];
 
     public function scopeSearsh($query,$searsh){

@@ -78,20 +78,20 @@ class PostServiceService
             return [
                 'success' => false,
                 'msg' => 'do not have permssion',
-                'status' => 400
+                'status' => 401
             ];
         }
     }
 
     public function uploadLicense($request, $id)
     {
-
+        
         $freelancer=EmpplyeLicense::where('freelancer_id',$id)->first();
         if($freelancer){
             return [
                 'success' => false,
                 'msg' => 'you have license alredy',
-                'status' => 401];
+                'status' => 400];
         }else{
         $request->validate([
             'license_file' => 'required|file',
@@ -101,11 +101,10 @@ class PostServiceService
             $license_file = $request->file('license_file')->getClientOriginalName();
             // upload to server
 
-            $path = $request->file('license_file')->storeAs('', date('mdYHis') . uniqid() . $license_file, 'empco_resume');
-
+            $path = $request->file('license_file')->storeAs('Freelancerlicenses', date('mdYHis') . uniqid() . $license_file, 'empco_resume');
         }
         $freelancerLicense = EmpplyeLicense::create([
-            'license_file' => ("license_file/" . $path),
+            'license_file' => ("resumes/".$path),
             'freelancer_id' => $id,
         ]);
         return ['success' => true, 'data' => $freelancerLicense, 'msg' => 'upload successfully'];

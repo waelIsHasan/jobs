@@ -29,6 +29,7 @@ class PostJobService
             'required_skills' => $request['required_skills'],
             'location' => $request['location'],
             'category_id' => $request['category_id'],
+            'work_nature' =>$request['work_nature'],
             'dead_time' => $request['dead_time'],
             'salary' => $request['salary'],
             'type_job' => $request['type_job'],
@@ -59,6 +60,7 @@ class PostJobService
                     'required_skills' =>$this->dynamicCheck($request , $job , 'required_skills'),
                     'location' => $this->dynamicCheck($request , $job , 'location'),
                     'category_id' =>  $this->dynamicCheck($request , $job , 'category_id'),
+                    'work_nature' =>  $this->dynamicCheck($request , $job , 'work_nature'),
                     'dead_time' =>$this->dynamicCheck($request , $job , 'dead_time'),
                     'salary' => $this->dynamicCheck($request , $job , 'salary'),
                     'type_job' => $this->dynamicCheck($request , $job , 'type_job'),
@@ -120,7 +122,7 @@ class PostJobService
             return [
                 'success' => false,
                 'msg' => 'you have license alredy',
-                'status' => 401];
+                'status' => 400];
         }else{
         $request->validate([
             'license_file' => 'required|file',
@@ -130,11 +132,11 @@ class PostJobService
             $license_file = $request->file('license_file')->getClientOriginalName();
             // upload to server
 
-            $path = $request->file('license_file')->storeAs('', date('mdYHis') . uniqid() . $license_file, 'empco_resume');
+            $path = $request->file('license_file')->storeAs('ownerLicenses', date('mdYHis') . uniqid() . $license_file, 'empco_resume');
 
         }
         $companyLicense = CompanyLicense::create([
-            'license_file' => ("license_file/" . $path),
+            'license_file' => ("resumes/" . $path),
             'owner_id' => $id,
         ]);
         return ['success' => true, 'data' => $companyLicense, 'msg' => 'upload successfully'];

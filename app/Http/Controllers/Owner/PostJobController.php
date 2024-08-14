@@ -186,8 +186,8 @@ class PostJobController extends Controller
         if($response['success']){
             return $this->successResponse($response['msg'] , $response['data']);
         }
-        elseif($response['status'] == 401){
-            return $this->failedResponse($response['msg'] , null , 401);
+        elseif($response['status'] == 400){
+            return $this->failedResponse($response['msg'] , null , 400);
         }
        
     }

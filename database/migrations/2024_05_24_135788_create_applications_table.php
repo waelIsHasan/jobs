@@ -19,8 +19,9 @@ return new class extends Migration
             $table->foreign('freelancer_id')
             ->references('id')
             ->on('freelancers')
-            ->onDelete('cascade');
-            
+            ->onDelete('cascade'); 
+            $table->string('name');
+            $table->string('email');
             $table->unsignedBigInteger('job_id');
             $table->foreign('job_id')
             ->references('id')

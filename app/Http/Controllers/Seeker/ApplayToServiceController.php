@@ -15,6 +15,5 @@ class ApplayToServiceController extends Controller
         $searsh = $request->only('name','price','description');
         $service = Service::searsh( $searsh)->get();
          return $this->successResponse('searsh service' , $service );
-         
     }
 }

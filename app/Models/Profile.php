@@ -11,10 +11,17 @@ class Profile extends Model
     protected $fillable = [
     'image',
     'Bio',
+    'brief',
     'home_place' ,
     'work_place' ,
     'birthday' ,
-    
+    'email',
+    'phone_no',
+    'work_as',
+    'foundation',
+    'overview',
+    'ceo',
+    'projects',
     'profileable_id' ,
     'profileable_type'
 ];

@@ -27,13 +27,13 @@ Route::post('login' ,[AuthAdminController::class , 'login'] );
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin-api' , 'scopes:admin']] , function(){
    
    //owner
-    Route::get('show-license' ,[AdminController::class , 'showLicense'] );
-    Route::get('approv/{licenseId}' ,[AdminController::class , 'licenseApproval'] );
-    Route::get('rejected/{licenseId}' ,[AdminController::class , 'licenserejected'] );
+    Route::get('show-owner-licenses' ,[AdminController::class , 'showLicense'] );
+    Route::get('approve-owner/{licenseId}' ,[AdminController::class , 'licenseApproval'] );
+    Route::get('reject-owner/{licenseId}' ,[AdminController::class , 'licenserejected'] );
 
     //freelancer
-    Route::get('show-license' ,[AdminController::class , 'showFreelancerLicense'] );
-    Route::get('approv/{licenseId}' ,[AdminController::class , 'licenseFreelancerApproval'] );
-    Route::get('rejected/{licenseId}' ,[AdminController::class , 'licenseFreelancerRejected'] );
+    Route::get('show-freelancer-licenses' ,[AdminController::class , 'showFreelancerLicense'] );
+    Route::get('approve-freelancer/{licenseId}' ,[AdminController::class , 'licenseFreelancerApproval'] );
+    Route::get('reject-freelancer/{licenseId}' ,[AdminController::class , 'licenseFreelancerRejected'] );
 
 });

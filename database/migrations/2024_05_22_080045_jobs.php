@@ -17,7 +17,8 @@ return new class extends Migration
             $table->text('body')->nullable();
             $table->text('required_skills')->nullable();
             $table->double('salary')->nullable();
-            $table->enum('type_job',['Full-time','Part-time','Hybrid'])->nullable();
+            $table->enum('type_job',['Full-time','Part-time'])->nullable();
+            $table->enum('work_nature',['on-site','Hybrid','Remote'])->nullable();
             $table->string('location')->nullable();
             $table->date('dead_time')->nullable();
             $table->bigInteger('category_id')->unsigned();

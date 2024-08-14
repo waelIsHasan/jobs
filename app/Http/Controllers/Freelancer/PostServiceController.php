@@ -11,6 +11,7 @@ use App\Services\PostServiceService;
 use Exception;
 
 use App\Http\Requests\ServiceRequest;
+use App\Models\EmpplyeLicense;
 
 class PostServiceController extends Controller
 {
@@ -93,10 +94,21 @@ class PostServiceController extends Controller
             if($response['success']){
                 return $this->successResponse($response['msg'] , $response['data']);
             }
-            elseif($response['status'] == 401){
-                return $this->failedResponse($response['msg'] , null , 401);
+            elseif($response['status'] == 400){
+                return $this->failedResponse($response['msg'] , null , 400);
             }
            
+        }
+
+        public function checklicense(Request $request){
+            $id = auth()->id();
+            $company=EmpplyeLicense::where('freelancer_id',$id)->first();
+            if(!$company){
+                return $this->failedResponse('you dont have license' , null , 401);
+               
+            }else{
+                return $this->successResponse('status your license',$company);
+            }
         }
 
 }

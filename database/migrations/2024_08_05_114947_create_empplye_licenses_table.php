@@ -17,7 +17,6 @@ return new class extends Migration
             $table->enum('status',['pending','approved','rejected']);
             $table->unsignedBigInteger('freelancer_id');
             $table->foreign('freelancer_id') ->references('id')->on('freelancers')->onDelete('cascade');
-     
             $table->timestamps();
         });
     }

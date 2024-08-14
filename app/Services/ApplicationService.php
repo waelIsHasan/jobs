@@ -42,18 +42,18 @@ class ApplicationService
         }
         $request->validate([
             'resume' => 'required|file',
+            'name'=>'required',
+            'email'=>'required'
         ]);
-
-        if ($request->hasFile('resume')) {
             $resume = $request->file('resume')->getClientOriginalName();
             // upload to server
-
             $path = $request->file('resume')->storeAs('', date('mdYHis') . uniqid() . $resume, 'empco_resume');
-
-        }
-        $application = Application::create([
-            'resume' => ("resumes/" . $path),
+     
+            $application = Application::create([
+            'resume' => ("resumes/".$path),
             'freelancer_id' => $id,
+            'name' =>$request['name'],
+            'email' => $request['email'],
             'job_id' => $jobId,
         ]);
         return [
