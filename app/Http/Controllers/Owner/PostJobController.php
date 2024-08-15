@@ -96,6 +96,15 @@ class PostJobController extends Controller
         return $this->successResponse (count($owner->jobs) . ' job posts', $owner->jobs);
         ;
     }
+    public function showCompanyJobsbyCategory($categoryId)
+    {
+
+        $id = auth()->id();
+        $jobs = Job::where('owner_id', $id)
+        ->where('category_id', $categoryId)
+        ->get();
+        return $this->successResponse (count($jobs) . ' job posts', $jobs);
+    }
 
     public function showJobsbyFreelancer()
     {

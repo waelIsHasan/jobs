@@ -6,10 +6,16 @@ use App\Models\Owner;
 use App\Models\CompanyLicense;
 use Exception;
 use App\Traits\HelperTrait;
-
+use App\Services\NotificationService;
+use App\Models\Admin;
 class PostJobService
 {
     use HelperTrait;
+
+    protected $notificationService;
+    public function __construct(NotificationService $notificationService){
+        $this->notificationService = $notificationService;
+    }
 
     public function postJob($request, $id)
     {
@@ -35,6 +41,14 @@ class PostJobService
             'type_job' => $request['type_job'],
             'owner_id' => $id,
         ]);
+        $id = auth()->user()->id;
+        $owner = "App\Models\Owner";
+        $friends = $owner::find($id)->friends;
+      
+        // notify fcm 
+        
+        $this->notificationService->notifyFriends($id , $friends , 'Owner','PostingJob');
+
         return [
             'success' => true,
             'msg' => 'You post job successfully',
@@ -114,11 +128,12 @@ class PostJobService
     }
 
 
-    public function uploadLicense($request, $id)
-    {
-
-        $company=CompanyLicense::where('owner_id',$id)->first();
-        if($company){
+    public function uploadLicense($request)
+    {   
+        $id = auth()->user()->id;
+        $companyLicense=CompanyLicense::where('owner_id',$id)->first();
+        $company = Owner::find($id);
+        if($companyLicense){
             return [
                 'success' => false,
                 'msg' => 'you have license alredy',
@@ -139,6 +154,21 @@ class PostJobService
             'license_file' => ("resumes/" . $path),
             'owner_id' => $id,
         ]);
+        try{
+            $admin = Admin::find(1);
+            $data = [
+                'type' => 'basic',
+                'name' => $company['first_name'] .$company['last_name'],
+                'message' => 'Owner upload a License'
+            ];
+            $this->notificationService->send($admin , 'NEW License' , 'Owner upload a license' , $data , 'License');
+        }catch(Exception $e){
+            return ['success' => false , 'msg' => $e];
+        }
+
+
+
+
         return ['success' => true, 'data' => $companyLicense, 'msg' => 'upload successfully'];
     }
 } 

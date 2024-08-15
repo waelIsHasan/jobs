@@ -23,6 +23,7 @@ class Owner extends Authenticatable
         'last_name',
         'email',
         'password',
+        'fcm_token',
         'google_id',
         'email_verified_at'
     ];
@@ -76,8 +77,13 @@ class Owner extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function license(): HasOne
+    public function license()
     {
         return $this->hasOne(CompanyLicense::class);
+    }
+
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable');
     }
 }

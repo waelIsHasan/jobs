@@ -25,6 +25,7 @@ class Seeker extends Authenticatable
         'last_name',
         'email',
         'password',
+        'fcm_token',
         'google_id',
         'email_verified_at'
     ];
@@ -61,5 +62,10 @@ class Seeker extends Authenticatable
     public function reviews(){
         return $this->hasMany(Review::class)->cascadeOnDelete();
         
+    }
+
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable');
     }
 }

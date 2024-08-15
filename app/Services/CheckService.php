@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\Owner;
 use App\Models\Freelancer;
 use App\Models\Seeker;
+use App\Models\Admin;
 class CheckService {
 
     public function check($user){
@@ -18,6 +19,9 @@ class CheckService {
     
     } else if ($user instanceof \App\Models\Seeker) {
         return Seeker::class;        
+    }else {
+        return Admin::class;
+
     }
 
 }

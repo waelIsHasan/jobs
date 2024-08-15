@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "job-and-freelancing",
+  "private_key_id": "bcb1d3cbae5bb529c6ffc8fe2b12371f76cdd38b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQD0PGfxQvlTzCcT\nQpTPvwbFf1t+bUra1jqKV9A5BY2+t7iGg35yCOTkI79cxDsk5zakzY6/0IjYeJ1r\nc72+vfwO8+4hSS6dhaHDQejTqNBxEDQEa05kbItkFF7yBkpe29fvQHl4HAnT+GbM\nUXbt97BXmNFvjyErX+rYBiUMaYwbXeebwqeAP9UfTI75tnyvYsIedjl9Bf/u4sY3\nRg5kVJOCFUwCZbY5VB5ktmX4l+X0dQELCRlta4UGIJmqJ2gZ6HEKdc8tnUJ81qDi\nvpdoigQhPrR+jf0peVzEwHBSccD3QPAcy9Otyg5QYHqZCOQkeWrF7yjemZ8/4yC7\nc5oLB5xFAgMBAAECggEAAdrmjwmnD2qIdtaulTLDa2dNf8cSkEM3sEOph2/IRnzf\nW/lT+NhJO2SjVYCn4zem4/LeAuu/ZJq+n1ovDM/ibqAI0ZDcbf+Eq5ayQ/u7tFtF\n+d9P/4J9ds+zwW/7k6vqgHBpD0KekFEgYu9AKntV91ZzKMpUFcboVuldCV8kYgeZ\nPmuxma3++YCGJiRbmGrAQd/Gs5dG7r7d9mT4VuxYng/EcZGUqFkTH5PzOCZ51rrG\nQUWyhJq287eSRtZnIT8fPbtk/srA6G0uMv05JHCK0LP1f/OyEI2crL/RIChXxFSU\ntqFJcqQS61PtJSk0boa6pggM6QRhuVKL5Nwx2RnxNQKBgQD+Ltys1iy6FvWEywcw\nHgP2xY4PIv098ZFHRuFD3HxW9oOl694iXZIzmUZQD8QSJrxiqP5+DetLo3bQlV5S\nPdlmOZegs/u9xzNty0Qi9cjSDO77P0dwhG1Kqbmtv3ZqPPgmk3dZDgaz/eYqsL5r\ncfNW1Ya7sdF0LBDoztSu39e7mwKBgQD1+1dsVGAAKwKKs2B7GmSvnMZUT8J0+E0K\nMm9qMQDgl5/VYrKdtg/eKTkHE/AS3XAc8GjwohqDTyoXLPzA+3qtt3mzn2RcjDna\nTV9U5IzxfUBY8ZA9UUvWCiM+djtZgwheKrl75BhpuQ45+NYSyNLLb9YFRyDemgsl\nyE6jwUk1nwKBgCWg/l4/3qM13ubnv4qqBuAzYtJu1Zqj9mPc5GBNdcLR/69CecIQ\npCIrYLNdgiNFxMG+Tt6OZPTvoBlE44+9RD/T6tSJkI0Jvl1UqCOcyzv9WiurtIG9\nuQhClBBatccIe5wKXLK8VtWykq5jN+1kEygZuDZ1HpLaKy6r3+R7ks5dAoGBAOXe\nZ6g4gS4nA00SrArec1EZNM39az9b+sKYtz2JZcR8bUU/4qM3TETUSRKwMx2uCeNB\nVw/orNYg2LintduyJsbIOtb9ERDbigTTYU839e6GmeeEdsKWgkQXXTA11OilZuB5\nFLUORzIlWYIbZBJR0YuDi4GLItBjLB+2vKaTLhMJAoGBANjmzI19084pLXeMq9xv\ns5ntMNHqFvXXbfbPyyyUUjb11hT1TsfsQkPz9aLZv+bzF2cAQcypeKsXxYJNb+ym\nltzyFV1I0tWQmMrYm4RIuOIPsGsirMPlAuGxIvhH141ZYQ+MEt0T0vm2EG0Q8cgK\nzYL4UsYfPqDxO5d+Qu3Y70Ve\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-5wyxs@job-and-freelancing.iam.gserviceaccount.com",
+  "client_id": "115629272471477810088",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-5wyxs%40job-and-freelancing.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

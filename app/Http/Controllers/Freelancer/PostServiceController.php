@@ -34,11 +34,8 @@ class PostServiceController extends Controller
                     return $this->successResponse('post service successfully', $response['service']);
                 }
                        
-               elseif($response['status'] == 401){
-                    return $this->failedResponse($response['msg'] , null , 401);
-                }
-                elseif($response['status'] == 404){
-                    return $this->failedResponse($response['msg'] , null , 404);
+              else {
+                    return $this->failedResponse($response['msg'] , null , $response['status']);
                 }
             } catch (Exception $e) {
                 return $this->failedResponse('You have to enter all attributes', $e, 400);

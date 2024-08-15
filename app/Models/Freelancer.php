@@ -10,6 +10,7 @@ use Laravel\Passport\HasApiTokens;
 use App\Models\Profile;
 use App\Models\Friendship;
 use App\Models\Save;
+
 class Freelancer extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -19,6 +20,7 @@ class Freelancer extends Authenticatable
         'email',
         'password',
         'google_id',
+        'fcm_token',
         'email_verified_at'
     ];
 
@@ -65,9 +67,14 @@ class Freelancer extends Authenticatable
     }
     
 
-    public function freelancerLicense(): HasOne
+    public function freelancerLicense()
     {
-        return $this->hasOne(FreelancerLicense::class);
+        return $this->hasOne(EmpplyeLicense::class);
+    }
+
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable');
     }
     
 }

@@ -10,4 +10,9 @@ use Laravel\Passport\HasApiTokens;
 class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory;
+
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable');
+    }
 }

@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Owner\Auth\AuthGoogleOwnerController;
 use App\Http\Controllers\Seeker\Auth\AuthGoogleSeekerController;
 use App\Http\Controllers\Freelancer\Auth\AuthGoogleFreelancerController;
+use App\Http\Controllers\NotificationEmpcoController;
+use App\Models\NotificationEmpco;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +34,5 @@ Route::get('/auth/freelancer/google/callback', [AuthGoogleFreelancerController::
 Route::get('/dash' ,function(){
     return view('testMessageRealtime');
 });
+
+Route::get('/send' , [NotificationEmpcoController::class , 'send']);

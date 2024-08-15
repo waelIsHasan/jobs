@@ -5,9 +5,15 @@ use App\Models\Service;
 use App\Models\Freelancer;
 use App\Models\EmpplyeLicense;
 use Exception;
+use App\Services\NotificationService;
+use App\Models\Admin;
 
 class PostServiceService
 {
+    protected $notificationService;
+    public function __construct(NotificationService $notificationService){
+        $this->notificationService = $notificationService;
+    }
 
     public function postService($request, $id)
     {
@@ -30,6 +36,20 @@ class PostServiceService
             'category_id' => $request['category_id'],
             'freelancer_id' => $id,
         ]);
+        $id = auth()->user()->id;
+        $freelancer = "App\Models\Freelancer";
+        $friends = $freelancer::find($id)->friends;
+      
+        // notify fcm
+        try{ 
+        $this->notificationService->notifyFriends($id , $friends ,'Freelancer' ,'PostingService');
+        }
+        catch(Exception $e){
+            return [
+                'succes' => false,
+                'msg' => $e
+            ];
+        }
         return [
             'success' => true,
             'msg' => 'You post job successfully',
@@ -83,11 +103,13 @@ class PostServiceService
         }
     }
 
-    public function uploadLicense($request, $id)
+    public function uploadLicense($request)
     {
-        
-        $freelancer=EmpplyeLicense::where('freelancer_id',$id)->first();
-        if($freelancer){
+        $id = auth()->user()->id;
+        $freelancerLicense=EmpplyeLicense::where('freelancer_id',$id)->first();
+        $freelancer = Freelancer::find($id);
+
+        if($freelancerLicense){
             return [
                 'success' => false,
                 'msg' => 'you have license alredy',
@@ -107,7 +129,21 @@ class PostServiceService
             'license_file' => ("resumes/".$path),
             'freelancer_id' => $id,
         ]);
+        try{
+            $admin = Admin::find(1);
+            $data = [
+                'type' => 'basic',
+                'name' => $freelancer['first_name'] .$freelancer['last_name'],
+                'message' => 'Freelancer upload a License'
+            ];
+            $this->notificationService->send($admin , 'NEW License' , 'Freelancer upload a license' , $data , 'License');
+        }catch(Exception $e){
+            return ['success' => false , 'msg' => $e];
+        }
+
         return ['success' => true, 'data' => $freelancerLicense, 'msg' => 'upload successfully'];
+        
+    
     }
 } 
 
