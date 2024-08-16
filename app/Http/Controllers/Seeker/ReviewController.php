@@ -19,7 +19,7 @@ class ReviewController extends Controller
 
         $existingService = Service::find($serviceId);
         if($existingService == null)
-        return $this->failedResponse('I can not find this service', null);
+        return $this->failedResponse('no Service match this query', null);
 
         $existingReview = Review::where('seeker_id',$id)
         ->where('service_id',$serviceId)->first();

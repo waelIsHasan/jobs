@@ -209,7 +209,9 @@ class PostJobController extends Controller
             return $this->failedResponse('you dont have license' , null , 401);
            
         }else{
+
             return $this->successResponse('status your license',$company);
+        
         }
     }
 

@@ -107,5 +107,14 @@ class PostServiceController extends Controller
                 return $this->successResponse('status your license',$company);
             }
         }
+        public function showOneService($id){
+            
+            $service = Service::find($id);
+
+            if($service == null){
+                     return $this->failedResponse('No service match this query' , null);
+                 }
+                 return $this->successResponse('one-service' , $service);
+        }
 
 }

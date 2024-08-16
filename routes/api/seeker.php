@@ -48,10 +48,13 @@ Route::post('/register' ,[AuthSeekerController::class , 'register']);
     Route::get('/messages/{receiverId}/role/{receiverType}' , [ChatController::class , 'getMessages']);
 
     Route::post('/search' , [ApplayToServiceController::class, 'serviceSearsh']);
-    
+    Route::get('/show-services/{id}' , [ApplayToServiceController::class , 'showServiceByFreelancer']);
+    Route::get('/one-service/{id}' , [ApplayToServiceController::class , 'showOneService']);
+
     Route::post('/addReview/{serviceId}' , [ReviewController::class, 'store']);
-    Route::get('/review/{serviceId}' , [ReviewController::class, 'serviceAvgRating']);
-    Route::post('/destroyReview/{reviewId}' , [ReviewController::class, 'destroy']);
+    Route::get('/avg-review/{serviceId}' , [ReviewController::class, 'serviceAvgRating']);
+    Route::delete('/destroyReview/{reviewId}' , [ReviewController::class, 'destroy']);
+  
     Route::get('/notifications' , [AdminController::class , 'showNotifications']);
 
 });
