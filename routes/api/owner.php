@@ -9,6 +9,8 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Owner\PostJobController;
 use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\Owner\AIController;
+use App\Http\Controllers\Admin\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +73,8 @@ Route::group(['prefix' => 'owner', 'middleware' => ['auth:owner-api' , 'scopes:o
     //license
     Route::post('/upload-license' , [PostJobController::class, 'uploadLicense']);
     Route::get('/check-license' , [PostJobController::class, 'checkLicense']);
+    Route::get('/notifications' , [AdminController::class , 'showNotifications']);
+
 });
 
 

@@ -22,6 +22,8 @@ class Profile extends Model
     'overview',
     'ceo',
     'projects',
+    'company_name',
+    'friends',
     'profileable_id' ,
     'profileable_type'
 ];

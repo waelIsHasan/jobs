@@ -182,10 +182,11 @@ class PostJobController extends Controller
         $arr = [];
         foreach ($jobs as $job) {
             foreach ($job->applications as $application) {
+                $application['job'] = Job::find($application->job_id);
                 $arr[] = $application;
             }
         }
-        return $this->successResponse('you have ' . count($arr) . ' applications', $arr);
+        return $this->successResponse('you have ' . count($arr) . ' applications', (count($arr) == 0) ? ($job->applications) : $arr);
     }
 
     public function uploadLicense(Request $request){

@@ -56,6 +56,7 @@ class SaveController extends Controller
         foreach($arrayOfSave as $saveRecord){
             $jobs[] = Job::find($saveRecord->job_id);
         }
-        return $this->successResponse('you have '.count($jobs).' saved posts' , $jobs);
+        
+        return $this->successResponse('you have '.count($jobs).' saved posts' , (count($jobs) ==0 )? $arrayOfSave :$jobs);
     }       
 }

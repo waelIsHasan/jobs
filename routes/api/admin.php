@@ -36,4 +36,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin-api' , 'scopes:a
     Route::get('approve-freelancer/{licenseId}' ,[AdminController::class , 'licenseFreelancerApproval'] );
     Route::get('reject-freelancer/{licenseId}' ,[AdminController::class , 'licenseFreelancerRejected'] );
 
+    Route::get('/notifications' , [AdminController::class , 'showNotifications']);
+
 });

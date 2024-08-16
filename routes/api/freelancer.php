@@ -13,6 +13,8 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Freelancer\PostServiceController;
 use App\Http\Controllers\Owner\PostJobController;
+use App\Http\Controllers\Admin\AdminController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -77,6 +79,9 @@ Route::group(['prefix' => 'freelancer', 'middleware' => ['auth:freelancer-api' ,
 
     Route::post('/upload-license' , [PostServiceController::class, 'uploadLicense']);
     Route::get('/check-license' , [PostServiceController::class, 'checkLicense']);
+
+    Route::get('/notifications' , [AdminController::class , 'showNotifications']);
+
 
 });
 

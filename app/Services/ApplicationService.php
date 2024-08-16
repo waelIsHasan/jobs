@@ -17,7 +17,7 @@ class ApplicationService
         $existingJob = Job::find($jobId);
 
         if ($existingJob == null)
-            return ['msg' => 'No job match with your query', 'success' => false];
+            return ['msg' => 'No job match with your query', 'success' => false , 'status' => 400];
 
             $freelancer=EmpplyeLicense::where('freelancer_id',$id)->get();
             if($freelancer->isEmpty()){
@@ -55,11 +55,14 @@ class ApplicationService
             'name' =>$request['name'],
             'email' => $request['email'],
             'job_id' => $jobId,
+            
         ]);
         return [
             'success' => true,
             'msg' => 'You applay job successfully',
-            'application' => $application
+            'application' => $application,
+            'status'=>200,
+            'job' => $existingJob
         ];
         }else{
             return [

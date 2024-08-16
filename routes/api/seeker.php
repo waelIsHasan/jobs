@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Seeker\ReviewController;
 use App\Http\Controllers\Seeker\ApplayToServiceController;
+use App\Http\Controllers\Admin\AdminController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -50,4 +52,6 @@ Route::post('/register' ,[AuthSeekerController::class , 'register']);
     Route::post('/addReview/{serviceId}' , [ReviewController::class, 'store']);
     Route::get('/review/{serviceId}' , [ReviewController::class, 'serviceAvgRating']);
     Route::post('/destroyReview/{reviewId}' , [ReviewController::class, 'destroy']);
+    Route::get('/notifications' , [AdminController::class , 'showNotifications']);
+
 });

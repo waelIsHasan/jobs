@@ -7,31 +7,34 @@ use Illuminate\Http\Request;
 use App\Models\CompanyLicense;
 use App\Models\EmpplyeLicense;
 use App\Traits\ResponseTrait;
+use App\Models\Freelancer;
+use App\Models\Notification;
+use App\Models\Owner;
+
 
 
 class AdminController extends Controller
 {
     use ResponseTrait;
 
-    public function licenseApproval($licenseId)
+    public function licenseApproval($ownerId)
     {
-
-        $license = CompanyLicense::find($licenseId);
-        if ($license == null) {
-            
+        $owner = Owner::find($ownerId);
+        $license = $owner->License;
+        if ($license == null) {         
             return $this->failedResponse('No license match your query', null);
         }else{
             $license->status='approved';
             $license->save();
             return $this->successResponse('license approved successfully',$license);
         }
-
     }
 
-    public function licenserejected($licenseId)
+    public function licenserejected($ownerId)
     {
+        $owner = Owner::find($ownerId);
+        $license = $owner->License;
 
-        $license = CompanyLicense::find($licenseId);
         if ($license == null) {
             
             return $this->failedResponse('No license match your query', null);
@@ -40,25 +43,33 @@ class AdminController extends Controller
             $license->save();
             return $this->successResponse('license rejected successfully',$license);
         }
-
     }
 
 
     public function showlicense(Request $request){
-        $company=CompanyLicense::get();
-        if($company->isEmpty()){
+
+        $licenses = CompanyLicense::get();
+        if($licenses->isEmpty()){
             return $this->failedResponse('you dont have licenses' , null , 401);
            
         }else{
-            return $this->successResponse(' your license',$company);
+            $arr = [];
+            foreach($licenses as $license){
+                $license['name'] =Owner::find($license->owner_id)->first_name." ".Owner::find($license->owner_id)->last_name;
+
+                $arr[] = $license;
+            }
+
+            return $this->successResponse(' your license',(count($arr) == 0) ? $licenses : $arr);
         }
     }
 
     ///////////////////////////////////
-    public function licenseFreelancerApproval($licenseId)
+    public function licenseFreelancerApproval($freelancerId)
     {
+        $freelancer = Freelancer::find($freelancerId);
+        $license = $freelancer->License;
 
-        $license = EmpplyeLicense::find($licenseId);
         if ($license == null) {
             
             return $this->failedResponse('No license match your query', null);
@@ -70,10 +81,13 @@ class AdminController extends Controller
 
     }
 
-    public function licenseFreelancerRejected($licenseId)
+    public function licenseFreelancerRejected($freelancerId)
     {
-
-        $license = EmpplyeLicense::find($licenseId);
+       
+       
+        $freelancer = Freelancer::find($freelancerId);
+        $license = $freelancer->License;
+    
         if ($license == null) {
             
             return $this->failedResponse('No license match your query', null);
@@ -87,12 +101,24 @@ class AdminController extends Controller
 
 
     public function showFreelancerLicense(Request $request){
-        $freelancer=EmpplyeLicense::get();
-        if($freelancer->isEmpty()){
+        $licenses = EmpplyeLicense::get();
+        if($licenses->isEmpty()){
             return $this->failedResponse('you dont have licenses' , null , 401);
            
         }else{
-            return $this->successResponse(' your license',$freelancer);
+            
+            $arr = [];
+            foreach($licenses as $license){
+                $license['name'] =Freelancer::find($license->freelancer_id)->first_name." ".Freelancer::find($license->freelancer_id)->last_name;
+                $arr[] = $license;
+            }
+            return $this->successResponse(' your license',(count($arr) == 0) ? $licenses : $arr);
         }
+    }
+    public function showNotifications(){  
+        $id = auth()->user()->id;
+        $user = auth()->user();  
+        $notifications = Notification::where('notifiable_id' , $id)->where('notifiable_type' , class_basename($user))->get();
+        return $this->successResponse('notifications' , $notifications);
     }
 }

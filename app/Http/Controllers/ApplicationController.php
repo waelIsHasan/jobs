@@ -60,7 +60,14 @@ class ApplicationController extends Controller
 
         if($freelancer){
             $applications = $freelancer->applications;
-            return $this->successResponse('your applications' , $applications );
+            $arr = [];
+           
+            foreach($applications as $application){
+                $application['job'] = Job::find($application->job_id);
+                $arr[]= $application; 
+            }
+
+            return $this->successResponse('your applications' , (count($arr) == 0) ? $applications : $arr );
         }else{
              return $this->failedResponse('you dont have permission', null);
         }

@@ -13,7 +13,7 @@ class EmpplyeLicense extends Model
         'freelancer_id'
     ];
 
-    public function freelancer(): BelongsTo
+    public function freelancer()
     {
         return $this->belongsTo(Freelancer::class);
     }

@@ -20,12 +20,15 @@ class ProfileService {
                 'projects' => $request['projects'],
                 'overview' => $request['overview'],
                 'work_as' => $request['work_as'],
+                'friends'=>count($model::find($id)->friends),
+                'company_name'=> $request['company_name'],
                 'profileable_id' =>$id,
                 'profileable_type' => class_basename($model),                    
             ]);
             return ['profile' => $profile];
     }else {
         $profile = $user->profile;
+        $model = 'App\Models\\'.class_basename($model);
             $profile->update([
                 'Bio' => $this->dynamicCheck($request , $profile , 'Bio'),
                 'home_place' =>$this->dynamicCheck($request , $profile , 'home_place'),
@@ -36,6 +39,8 @@ class ProfileService {
                 'ceo' => $this->dynamicCheck($request , $profile , 'ceo'),
                 'phone_no' =>$this->dynamicCheck($request , $profile , 'phone_no'),
                 'brief' => $this->dynamicCheck($request , $profile , 'brief'),
+                'friends'=>count($model::find($id)->friends),
+                'company_name'=> $this->dynamicCheck($request , $profile , 'company_name'),
                 'projects' =>$this->dynamicCheck($request , $profile , 'projects'),
                 'overview' => $this->dynamicCheck($request , $profile , 'overview'),
                 'work_as' => $this->dynamicCheck($request , $profile , 'work_as'),

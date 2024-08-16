@@ -67,7 +67,7 @@ class Freelancer extends Authenticatable
     }
     
 
-    public function freelancerLicense()
+    public function License()
     {
         return $this->hasOne(EmpplyeLicense::class);
     }
@@ -76,5 +76,7 @@ class Freelancer extends Authenticatable
     {
         return $this->morphMany(Notification::class, 'notifiable');
     }
+
+   
     
 }
