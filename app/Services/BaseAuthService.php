@@ -48,7 +48,8 @@ class BaseAuthService
                 'name' => $user['first_name'] .$user['last_name'],
                 'message' => 'New User have Register In empco',
             ];
-            $this->notificationService->send($admin , 'New Register' , 'New User have Register In empco' , $data , 'Registeration');
+         //   $this->notificationService->send($admin , 'New Register' , 'New User have Register In empco' , $data , 'Registeration');
+        
         }catch(Exception $e){
             return ['success' => false , 'msg' => $e];
         }

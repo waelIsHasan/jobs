@@ -26,7 +26,7 @@ class AuthOwnerController extends Controller
         if ($response['success']) {
             return $this->successResponse($response['msg'], $response['data']);
         } else {
-            return $this->failedResponse($response['msg'], null, $response['status']);
+            return $this->failedResponse($response['msg'], null, 400);
         }   
     
     }

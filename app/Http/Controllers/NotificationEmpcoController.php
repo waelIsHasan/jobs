@@ -44,7 +44,7 @@ class NotificationEmpcoController extends Controller
             'type' => 'notificatoni',
             'notifiable_type' => 'user/model',
             'notifiable_id' => 1,
-            'data' => json_encode([
+            'data' => ([
                 'body' => 'hello',
                 'message' => 'body',
                 'title' =>'heoll',
