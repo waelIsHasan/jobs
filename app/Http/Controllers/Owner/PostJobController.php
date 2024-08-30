@@ -180,13 +180,15 @@ class PostJobController extends Controller
         $user = auth()->user();
         $jobs = $user->jobs;
         $arr = [];
+        $job1 = [];
         foreach ($jobs as $job) {
             foreach ($job->applications as $application) {
                 $application['job'] = Job::find($application->job_id);
                 $arr[] = $application;
             }
+            $job1=$job->applications;
         }
-        return $this->successResponse('you have ' . count($arr) . ' applications', (count($arr) == 0) ? ($job->applications) : $arr);
+        return $this->successResponse('you have ' . count($arr) . ' applications', (count($arr) == 0) ? ($job1) : $arr);
     }
 
     public function uploadLicense(Request $request){

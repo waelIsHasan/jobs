@@ -6,6 +6,7 @@ use App\Http\Controllers\Seeker\Auth\AuthGoogleSeekerController;
 use App\Http\Controllers\Freelancer\Auth\AuthGoogleFreelancerController;
 use App\Http\Controllers\NotificationEmpcoController;
 use App\Models\NotificationEmpco;
+use App\Http\Controllers\StripePaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +37,9 @@ Route::get('/dash' ,function(){
 });
 
 Route::get('/send' , [NotificationEmpcoController::class , 'send']);
+
+Route::get('/stripe' , [StripePaymentController::class , 'stripePost']);
+
+Route::get('/index' , [StripePaymentController::class , 'index'])->name('index');
+Route::post('/checkout' , [StripePaymentController::class , 'checkout'])->name('checkout');
+Route::get('/success' , [StripePaymentController::class , 'success'])->name('success');
